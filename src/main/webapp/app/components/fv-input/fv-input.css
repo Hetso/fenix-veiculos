@@ -1,0 +1,17 @@
+.fv-input md-input-container {
+    background-color: #fff;
+    border: var(--default-border);
+}
+
+.fv-input md-input-container.md-flex {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.fv-input md-input-container input {
+    border: none;
+}
+
+.fv-input {
+    margin-top: 25px;
+}

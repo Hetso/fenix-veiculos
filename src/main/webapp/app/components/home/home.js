@@ -44,6 +44,8 @@
             })
         }
 
+        $scope.reloadCars = reloadCars
+
         function saveCar(car) {
             CarService.saveCar(car)
             .then(function(res) {
@@ -56,7 +58,7 @@
         }
 
         function reloadCars() {
-            CarService.findAllCars()
+            CarService.findAllCars($scope.currentCarSearch)
             .then(function(res) {
                 $scope.cars = res
             });

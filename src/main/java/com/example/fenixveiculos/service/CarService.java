@@ -25,6 +25,10 @@ public class CarService {
 		return carRepository.findAll();
 	}
 
+	public List<CarModel> findAllCars(String simpleSearch) {
+		return carRepository.findAllBySearch(simpleSearch);
+	}
+
 	public Optional<CarModel> findCarById(long id) {
 		return carRepository.findById(id);
 	}

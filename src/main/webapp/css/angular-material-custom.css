@@ -60,6 +60,11 @@ md-icon {
     min-width: 24px;
 }
 
+.md-button[disabled] md-icon svg,
+.md-button:hover md-icon svg {
+    fill: #929292;
+}
+
 .md-button.md-icon-button {
     margin: 0 6px;
     height: 40px;
@@ -172,3 +177,9 @@ md-tooltip {
 md-dialog {
     width: 50%;
 }
+
+md-divider {
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+

@@ -1,8 +1,9 @@
 :root{
 
     --main: rgb(29, 108, 255);
-    --main-hover: var(--secundary);
+    --main-hover: rgb(4, 65, 179);
     --accent: rgb(251, 142, 0);
+    --accent-hover: rgb(255 178 78);
 
     --font-color-main: rgb(15, 15, 15);
     --font-color-accent: #fff;
@@ -41,6 +42,13 @@ a, button {
     height: var(--btn-height);
     background-color: var(--accent);
     border: none;
+    transition: 0.5s;
+}
+
+.btn-main:hover {
+    background-color: var(--accent-hover);
+    transition: 0.5s;
+    transform: scale(1.05, 1.05);
 }
 
 button:focus {

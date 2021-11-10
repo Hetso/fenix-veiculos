@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.fenixveiculos.dto.CarDTO;
@@ -28,7 +29,13 @@ public class CarController {
 	private final CarService carService;
 
 	@GetMapping
-	public ResponseEntity<List<CarModel>> getAllCars() {
+	public ResponseEntity<List<CarModel>> getAllCars(
+			@RequestParam(name = "simpleSearch", required = false) String simpleSearch) {
+
+		if (simpleSearch != null && !simpleSearch.isEmpty()) {
+			return ResponseEntity.ok(carService.findAllCars(simpleSearch));
+		}
+
 		return ResponseEntity.ok(carService.findAllCars());
 	}
 

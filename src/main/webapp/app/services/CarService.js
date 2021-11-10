@@ -11,8 +11,8 @@
 
     services.factory('CarService', function ($http) {
         return {
-            findAllCars: function(){
-               return $http.get(prefixV1 + '/cars').then(extractData)
+            findAllCars: function(simpleSearch){
+               return $http.get(prefixV1 + '/cars' + (simpleSearch ? '?simpleSearch='  + simpleSearch : '')).then(extractData)
             },
             saveCar: function(car) {
                 if(car.id) {

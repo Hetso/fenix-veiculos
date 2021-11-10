@@ -1,9 +1,13 @@
 <div class='home-content'>
-    <button type="button" class="btn-main" ng-click="editCar()">
-        Adicionar carro
-    </button>
     <md-card>
         <md-card-content>
+            <button type="button" class="btn-main" ng-click="editCar()">
+                Adicionar carro
+            </button>
+            <fv-input label="Pesquisar" type="text" model="currentCarSearch" autofocus="true" 
+                icon="search" icon-tooltip="Realizar pesquisa" icon-callback="reloadCars" enter-callback="reloadCars">
+            </fv-input>
+            <md-divider></md-divider>
             <table class="fv-table" style="min-width: 600px; max-width: 650px;">
                 <thead>
                     <tr>
