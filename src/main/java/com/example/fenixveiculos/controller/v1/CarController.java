@@ -19,9 +19,12 @@ import com.example.fenixveiculos.dto.CarDTO;
 import com.example.fenixveiculos.model.CarModel;
 import com.example.fenixveiculos.service.CarService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 @RestController
+@Tag(name = "Cars")
 @RequestMapping(value = "/api/v1/cars", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 public class CarController {
@@ -29,6 +32,7 @@ public class CarController {
 	private final CarService carService;
 
 	@GetMapping
+	@Operation(summary = "Get all cars (with simple search filter)")
 	public ResponseEntity<List<CarModel>> getAllCars(
 			@RequestParam(name = "simpleSearch", required = false) String simpleSearch) {
 
@@ -40,7 +44,9 @@ public class CarController {
 	}
 
 	@GetMapping(value = "/{id:[0-9]+}")
-	public ResponseEntity<Object> getCarById(@PathVariable("id") Long id) {
+	@Operation(summary = "Get a car by id")
+	public ResponseEntity<Optional<CarModel>> getCarById(
+			@PathVariable("id") Long id) {
 		Optional<CarModel> car = carService.findCarById(id);
 
 		if (car.isPresent()) {
@@ -51,23 +57,26 @@ public class CarController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Object> createCar(@RequestBody CarDTO carDTO) {
+	@Operation(summary = "Create a new car")
+	public ResponseEntity<CarModel> createCar(@RequestBody CarDTO carDTO) {
 		return ResponseEntity.ok(carService.createCar(carDTO));
 	}
 
 	@PutMapping(value = "/{id:[0-9]+}")
-	public ResponseEntity<Object> updateCar(@PathVariable("id") Long id,
+	@Operation(summary = "Update a car by id")
+	public ResponseEntity<String> updateCar(@PathVariable("id") Long id,
 			@RequestBody CarDTO carDTO) {
 
 		if (carService.findCarById(id).isPresent()) {
-			return ResponseEntity.ok(carService.updateCar(carDTO, id));
+			return ResponseEntity.ok("Updated");
 		}
 
 		return ResponseEntity.badRequest().body("Invalid car ID");
 	}
 
 	@DeleteMapping(value = "/{id:[0-9]+}")
-	public ResponseEntity<Object> deleteCar(@PathVariable("id") Long id) {
+	@Operation(summary = "Delete a car by id")
+	public ResponseEntity<String> deleteCar(@PathVariable("id") Long id) {
 
 		if (carService.findCarById(id).isPresent()) {
 			carService.deleteCar(id);
