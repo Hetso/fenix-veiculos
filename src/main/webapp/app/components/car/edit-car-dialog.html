@@ -1,0 +1,41 @@
+<md-dialog>
+    <form name="editCarCtrl.editCarForm" data-ng-submit="editCarCtrl.saveCar(editCarCtrl.editingCar)">
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <h2 class="md-title">{{editCarCtrl.editingCar.id ? 'Editar Carro' : 'Adicionar Carro'}}</h2>
+                <md-input-container class="md-block">
+                    <label>Marca</label>
+                    <input name="brand" type="text" ng-model="editCarCtrl.editingCar.brand" autocomplete="off" required
+                        md-autofocus>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Modelo</label>
+                    <input name="model" type="text" ng-model="editCarCtrl.editingCar.model" autocomplete="off" required>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Ano</label>
+                    <input name="year" type="text" ng-model="editCarCtrl.editingCar.year" autocomplete="off" required
+                        ng-pattern="/^[0-9]*$/g">
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Cor</label>
+                    <input name="color" type="text" ng-model="editCarCtrl.editingCar.color" autocomplete="off" required>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Preço</label>
+                    <input name="price" type="number" ng-model="editCarCtrl.editingCar.price" autocomplete="off"
+                        required>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Descrição</label>
+                    <textarea name="description" ng-model="editCarCtrl.editingCar.description" autocomplete="off"
+                        rows="5"></textarea>
+            </md-input-container>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions>
+	        <md-button type="button" ng-click="editCarCtrl.close()"><span>Cancelar</span></md-button>
+            <md-button type="submit" ng-disabled="!editCarCtrl.editCarForm.$valid"><span>Salvar</span></md-button>
+        </md-dialog-actions>
+	</form>
+</md-dialog>

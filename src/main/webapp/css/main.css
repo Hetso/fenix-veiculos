@@ -1,0 +1,106 @@
+:root{
+
+    --main: rgb(29, 108, 255);
+    --main-hover: var(--secundary);
+    --accent: rgb(251, 142, 0);
+
+    --font-color-main: rgb(15, 15, 15);
+    --font-color-accent: #fff;
+
+    --bg: rgb(219, 216, 216);
+
+    --default-border: 1px solid rgb(197, 197, 197);
+
+    --btn-width: 150px;
+    --btn-height: 40px;
+}
+
+/* RESET */
+
+* {
+    box-sizing: border-box;
+    padding: 0px;
+    margin:0px;
+}
+
+html, body{
+    color: var(--font-color-main);
+    height: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+a, button {
+    text-decoration: none;
+    color: var(--font-color-accent);
+    cursor: pointer;
+}
+
+.btn-main {
+    width: var(--btn-width);
+    height: var(--btn-height);
+    background-color: var(--accent);
+    border: none;
+}
+
+button:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.main-container {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-rows: 0.5fr 4fr;
+}
+
+.main-content {
+    background-color: var(--bg);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    flex: 1;
+    padding-top: 50px;
+}
+
+table.fv-table {
+	width:100%;
+	border-collapse: separate;
+	margin: 0;
+}
+
+table.fv-table th, table.fv-table td {
+	text-align: left;
+	border-bottom: 1px solid rgba(0,0,0,0.12);
+	height: 56px;
+    padding: 0px 10px;
+}
+
+table.fv-table tr:last-child th, table.fv-table tr:last-child td {
+	border-bottom:0;
+}
+
+table.fv-table md-checkbox {
+    margin: 0;
+    width: 20px;
+}
+
+table.fv-table .center {
+	text-align: center;
+}
+
+table.fv-table .right {
+    text-align: right;
+}
+
+td.vcenter {
+	vertical-align: middle;
+}
+table.fv-table .right {
+    text-align: right;
+    display: flex;
+    align-items: center;
+}

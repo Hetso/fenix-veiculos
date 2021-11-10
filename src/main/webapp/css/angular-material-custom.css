@@ -1,0 +1,174 @@
+md-card-title-text a:not(.md-button):focus {
+    outline: thin dotted;
+    outline: 5px auto -webkit-focus-ring-color;
+    outline-offset: -2px;
+}
+  
+md-card md-card-title {
+    padding: 12px;
+}
+
+md-card md-card-content {
+    padding: 12px;
+    display: block;
+}
+
+.md-button.fv-button--no-link {
+    color: currentColor;
+    text-align: left;
+    display: inline-block;
+    border-radius: 0;
+    font-size: 15px;
+    text-transform: none;
+    font-weight: 400;
+    height: 100%;
+}
+
+.md-button:not([disabled]).md-icon-button.fv-icon-button__hover:hover {
+    background-color: rgba(158,158,158,0.2);
+}
+
+button.fv-small-icon-button, a.fv-small-icon-button {
+    margin: 0 6px;
+    height: 30px!important;
+    min-height: 30px;
+    min-width: 0;
+    line-height: 18px;
+    padding: 6px;
+    width: 30px!important;
+    border-radius: 50%;
+}
+
+button.fv-small-icon-button md-icon, a.fv-small-icon-button md-icon {
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    min-height: 18px;
+}
+
+.md-title {
+    margin-bottom: 15px;
+}
+
+md-icon {
+    margin: auto;
+    background-repeat: no-repeat no-repeat;
+    fill: currentColor;
+    height: 24px;
+    width: 24px;
+    min-height: 24px;
+    min-width: 24px;
+}
+
+.md-button.md-icon-button {
+    margin: 0 6px;
+    height: 40px;
+    min-width: 0;
+    line-height: 24px;
+    padding: 8px;
+    width: 40px;
+    border-radius: 50%;
+}
+
+.md-button {
+    letter-spacing: .010em;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    min-height: 36px;
+    min-width: 88px;
+    line-height: 36px;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 2px;
+    box-sizing: border-box;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 0;
+    padding: 0 6px;
+    margin: 6px 8px;
+    background: 0 0;
+    color: currentColor;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-style: inherit;
+    font-variant: inherit;
+    font-family: inherit;
+    text-decoration: none;
+    -webkit-transition: box-shadow .4s cubic-bezier(.25, .8, .25, 1), background-color .4s cubic-bezier(.25, .8, .25, 1);
+    transition: box-shadow .4s cubic-bezier(.25, .8, .25, 1), background-color .4s cubic-bezier(.25, .8, .25, 1);
+}
+
+.md-button:focus, .md-button:hover {
+    text-decoration: none;
+}
+
+.md-autocomplete-suggestions li:focus, .md-button, .md-button:focus, .md-chips .md-chip-input-container input:focus, .md-chips .md-chip-input-container input:not([type]):focus, .md-chips .md-chip-input-container input[type=number]:focus, .md-chips .md-chip-input-container input[type=tel]:focus, .md-chips .md-chip-input-container input[type=url]:focus, .md-chips .md-chip-input-container input[type=text]:focus, .md-chips .md-chip-input-container input[type=email]:focus, .md-chips md-chip .md-chip-content:focus, .md-datepicker-calendar md-calendar:focus, .md-tab.md-focused, [tabindex='-1']:focus, md-autocomplete .md-show-clear-button button:focus, md-autocomplete input:not(.md-input), md-checkbox, md-dialog md-dialog-content:focus, md-input-container .md-input:focus, md-input-container .md-input:invalid, md-option:focus, md-radio-group:focus, md-select:focus, md-switch, md-switch .md-thumb, md-tabs-wrapper md-next-button:focus, md-tabs-wrapper md-prev-button:focus {
+    outline: 0;
+}
+
+.md-autocomplete-suggestions li, .md-button {
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.md-autocomplete-suggestions li, .md-button {
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.md-panel-outer-wrapper {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+.md-tooltip.md-show {
+    -webkit-transition: all .4s cubic-bezier(.25, .8, .25, 1);
+    transition: all .4s cubic-bezier(.25, .8, .25, 1);
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    opacity: .9;
+}
+
+.md-tooltip.md-origin-bottom {
+    -webkit-transform-origin: center top;
+    transform-origin: center top;
+    margin-top: 24px;
+}
+
+.md-tooltip {
+    pointer-events: none;
+    border-radius: 4px;
+    overflow: hidden;
+    opacity: 0;
+    font-weight: 500;
+    font-size: 14px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    height: 32px;
+    line-height: 32px;
+    padding-right: 16px;
+    padding-left: 16px;
+}
+
+.md-panel {
+    opacity: 0;
+    position: fixed;
+}
+
+md-tooltip {
+    background-color: #2e3436 !important;
+}
+
+md-dialog {
+    width: 50%;
+}
