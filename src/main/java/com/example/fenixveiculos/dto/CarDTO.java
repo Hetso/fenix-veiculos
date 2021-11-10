@@ -1,20 +1,22 @@
 package com.example.fenixveiculos.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
 import java.math.BigDecimal;
 
-@Getter
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class CarDTO {
 
-    private final String brand;
-    private final String model;
-    private final Integer year;
-    private final BigDecimal price;
-    private final String color;
-    private final String description;
-    private final String imagePath;
+	private String brand;
+	private String model;
+	private Integer year;
+	private BigDecimal price;
+	private String color;
+	private String description;
+	private String imagePath;
 
 }
