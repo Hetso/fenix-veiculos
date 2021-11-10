@@ -16,3 +16,18 @@ spring:
 server:
   error:
     include-stacktrace: never
+springdoc:
+  swagger-ui:
+    enabled: true
+  api-docs:
+    enabled: true
+    path: /api-docs
+    groups:
+      enabled: true
+  group-configs:
+  - group: v1
+    paths-to-match:
+    - /api/v1/**
+#   choose packages OR paths 
+#   packages-to-scan:
+#   - com.example.fenixveiculos.controller.v2
