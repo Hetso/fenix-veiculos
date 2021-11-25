@@ -6,6 +6,8 @@ target/
 
 .attach_pid*
 
+/src/main/resources/application.yml
+
 ### STS ###
 .apt_generated
 .classpath
