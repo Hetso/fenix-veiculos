@@ -31,3 +31,6 @@ springdoc:
 #   choose packages OR paths 
 #   packages-to-scan:
 #   - com.example.fenixveiculos.controller.v2
+jwt:
+  secret: mySecret
+  expiration: 604800017
