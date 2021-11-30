@@ -6,5 +6,5 @@ CREATE TABLE car_image
         REFERENCES car (id)
 );
 
-ALTER TABLE car CHANGE image_path image_cover TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL NULL;
-ALTER TABLE car MODIFY COLUMN image_cover TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL NULL;
+ALTER TABLE car CHANGE image_path cover_image TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL NULL;
+ALTER TABLE car MODIFY COLUMN cover_image TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL NULL;

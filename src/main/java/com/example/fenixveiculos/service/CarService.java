@@ -77,14 +77,28 @@ public class CarService {
 	}
 
 	@Transactional
-	public void updateCarImageCover(String filename, long carId) {
-		carRepository.updateImageCover(filename, carId);
+	public void updateCarCoverImage(String filename, long carId) {
+		carRepository.updateCoverImage(filename, carId);
 	}
 
 	@Transactional
 	public void saveCarImage(@Valid CarImageRequestDTO dto) {
 		carImageRepository.save(new CarImageModel(new CarModel(dto.getCarId()),
 				dto.getImagePath()));
+	}
+
+	@Transactional
+	public int deleteCarImage(long carId, String imagePath) {
+		return carImageRepository.delete(carId, imagePath);
+	}
+
+	public String getActualCarCoverImage(long carId) {
+		return carRepository.findCoverImageById(carId);
+	}
+
+	public boolean hasCarImage(String imagePath, long carId) {
+		return carImageRepository.findByCarIdAndImagePath(carId, imagePath)
+				.isPresent();
 	}
 
 // 	-- BRANDS
@@ -126,5 +140,10 @@ public class CarService {
 	@Transactional
 	public void deleteBrand(long id) {
 		brandRepository.deleteById(id);
+	}
+
+	@Transactional
+	public void updateBrandLogo(long brandId, String logo) {
+		brandRepository.updateLogo(logo, brandId);
 	}
 }

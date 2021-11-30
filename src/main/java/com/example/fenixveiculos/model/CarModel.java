@@ -57,8 +57,8 @@ public class CarModel {
 	@Column(name = "description")
 	private String description;
 
-	@Column(name = "image_cover")
-	private String imageCover;
+	@Column(name = "cover_image")
+	private String coverImage;
 
 	@JsonManagedReference
 	@OneToMany(mappedBy = "car")

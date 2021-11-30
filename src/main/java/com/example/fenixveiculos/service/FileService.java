@@ -69,6 +69,16 @@ public class FileService {
 				LOCAL_IMAGE_PATH + pathRefactor(pathSufix), fileName);
 	}
 
+	public void deleteImage(String fileName) {
+		deleteImage(fileName, null);
+	}
+
+	public void deleteImage(String fileName, String pathSufix) {
+		deleteLocalFile(LOCAL_IMAGE_PATH + pathRefactor(pathSufix), fileName);
+	}
+
+// 
+
 	private List<String> uploadLocalFiles(String path,
 			MultipartFile[] files) {
 		return Arrays.asList(files)
@@ -104,6 +114,14 @@ public class FileService {
 			throw new FileStorageException(
 					"Could not store file " + fileName,
 					ex);
+		}
+	}
+
+	private void deleteLocalFile(String path, String fileName) {
+		try {
+			innitializeLocalPath(path);
+			Files.delete(this.fileStorageLocation.resolve(fileName));
+		} catch (IOException e) {
 		}
 	}
 

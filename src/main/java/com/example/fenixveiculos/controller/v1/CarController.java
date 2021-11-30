@@ -2,6 +2,7 @@ package com.example.fenixveiculos.controller.v1;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -118,7 +119,12 @@ public class CarController {
 			@RequestParam(value = "coverImage") MultipartFile coverImage,
 			@RequestParam(value = "images", required = false) MultipartFile[] images) {
 
-		String imageName = null;
+		if (carService.findCarById(id) == null) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+					"Invalid car id");
+		}
+
+		String imageName = coverImage.getOriginalFilename();
 		List<String> imagesNames = new ArrayList<String>();
 
 		final String CAR_PATH_SUFIX = "/cars";
@@ -136,17 +142,35 @@ public class CarController {
 
 		// Impede que faça upload do coverImage e depois dê erro nas images
 		if (canUpload) {
-			imageName = fileService.uploadImage(coverImage, CAR_PATH_SUFIX);
 
-			carService.updateCarImageCover(imageName, id);
+			// update car cover image
 
+			String actualCoverImage = carService.getActualCarCoverImage(id);
+			if (actualCoverImage == null || !actualCoverImage
+					.equals(coverImage.getOriginalFilename())) {
+
+				fileService.deleteImage(coverImage.getOriginalFilename(),
+						CAR_PATH_SUFIX);
+				imageName = fileService.uploadImage(coverImage, CAR_PATH_SUFIX);
+				carService.updateCarCoverImage(imageName, id);
+			}
+
+			// insert new car images
 			if (hasImages) {
-				imagesNames = fileService.uploadImages(images, CAR_PATH_SUFIX);
+				Arrays.asList(images).forEach(image -> {
 
-				imagesNames.forEach(image -> {
-					carService.saveCarImage(CarImageRequestDTO.builder()
-							.carId(id).imagePath(image).build());
+					if (!carService.hasCarImage(image.getOriginalFilename(),
+							id)) {
+
+						String imgName = fileService.uploadImage(image,
+								CAR_PATH_SUFIX);
+						imagesNames.add(imgName);
+
+						carService.saveCarImage(CarImageRequestDTO.builder()
+								.carId(id).imagePath(imgName).build());
+					}
 				});
+				;
 			}
 
 			return ResponseEntity.ok(CarImageUploadResponseDTO.builder()
@@ -160,6 +184,18 @@ public class CarController {
 
 		throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
 				"Invalid images or cover image");
+	}
+
+	@DeleteMapping(value = "/{id:[0-9]+}/images/{fileName}")
+	@Operation(summary = "Delete a car image")
+	public ResponseEntity<String> deleteCarImage(@PathVariable("id") Long id,
+			@PathVariable("fileName") String imagePath) {
+
+		if (carService.deleteCarImage(id, imagePath) > 0) {
+			fileService.deleteImage(imagePath, "/cars");
+		}
+
+		return ResponseEntity.noContent().build();
 	}
 
 // -- BRANDS
@@ -224,6 +260,24 @@ public class CarController {
 		}
 
 		return ResponseEntity.badRequest().body("Invalid car brand ID");
+	}
+
+	@PostMapping(value = "/brands/{id:[0-9]+}/images")
+	@Operation(summary = "Upload car brand logo")
+	public ResponseEntity<FileUploadResponseDTO> uploadCarBrandLogo(
+			@PathVariable("id") Long id,
+			@RequestParam(value = "logo") MultipartFile logo) {
+
+		if (carService.findBrandById(id) == null) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+					"Invalid car brand id");
+		}
+
+		final String logoName = fileService.uploadImage(logo, "/cars");
+		carService.updateBrandLogo(id, logoName);
+
+		return ResponseEntity
+				.ok(FileUploadResponseDTO.builder().fileName(logoName).build());
 	}
 
 // -- ALL 

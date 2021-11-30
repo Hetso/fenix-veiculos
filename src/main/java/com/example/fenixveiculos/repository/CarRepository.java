@@ -22,7 +22,11 @@ public interface CarRepository extends JpaRepository<CarModel, Long>,
 	List<CarModel> findAllBySearch(@Param("simpleSearch") String simpleSearch);
 
 	@Modifying
-	@Query(value = "UPDATE car SET image_cover = :imageCover WHERE id = :carId", nativeQuery = true)
-	public int updateImageCover(@Param("imageCover") String imageCover,
+	@Query(value = "UPDATE car SET cover_image = :coverImage WHERE id = :carId", nativeQuery = true)
+	public int updateCoverImage(@Param("coverImage") String coverImage,
 			@Param("carId") long carId);
+
+	@Query(value = "SELECT cover_image from car where id = :id", nativeQuery = true)
+	public String findCoverImageById(@Param("id") long id);
+
 }
