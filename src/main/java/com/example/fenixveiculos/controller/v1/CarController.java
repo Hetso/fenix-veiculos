@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -64,7 +65,7 @@ public class CarController {
 	@PostMapping
 	@Operation(summary = "Create a new car")
 	public ResponseEntity<CarFullResponseDTO> createCar(
-			@RequestBody CarRequestDTO dto) {
+			@Validated @RequestBody CarRequestDTO dto) {
 
 		return ResponseEntity.status(HttpStatus.CREATED)
 				.body(carService.createCar(dto));
@@ -74,7 +75,7 @@ public class CarController {
 	@Operation(summary = "Update a car by id")
 	public ResponseEntity<CarFullResponseDTO> updateCar(
 			@PathVariable("id") Long id,
-			@RequestBody CarRequestDTO dto) {
+			@Validated @RequestBody CarRequestDTO dto) {
 
 		if (carService.findCarById(id) != null) {
 			return ResponseEntity.ok(carService.updateCar(dto, id));
@@ -124,7 +125,7 @@ public class CarController {
 	@PostMapping(value = "/brands")
 	@Operation(summary = "Create a new brand")
 	public ResponseEntity<CarBrandResponseDTO> createCarBrand(
-			@RequestBody CarBrandRequestDTO dto) {
+			@Validated @RequestBody CarBrandRequestDTO dto) {
 
 		if (carService.existBrand(dto.getName())) {
 			throw new ResponseStatusException(HttpStatus.CONFLICT,
@@ -139,7 +140,7 @@ public class CarController {
 	@Operation(summary = "Update a car brand by id")
 	public ResponseEntity<CarBrandResponseDTO> updateCarBrand(
 			@PathVariable("id") Long id,
-			@RequestBody CarBrandRequestDTO dto) {
+			@Validated @RequestBody CarBrandRequestDTO dto) {
 
 		if (carService.findBrandById(id) != null) {
 			return ResponseEntity.ok(carService.updateBrand(dto, id));

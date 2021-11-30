@@ -2,8 +2,11 @@ package com.example.fenixveiculos.service;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 import com.example.fenixveiculos.dto.car.CarBrandFullResponseDTO;
 import com.example.fenixveiculos.dto.car.CarBrandRequestDTO;
@@ -19,6 +22,7 @@ import com.example.fenixveiculos.utils.MapperUtils;
 import lombok.RequiredArgsConstructor;
 
 @Service
+@Validated
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class CarService {
@@ -44,7 +48,7 @@ public class CarService {
 	}
 
 	@Transactional
-	public CarFullResponseDTO createCar(CarRequestDTO dto) {
+	public CarFullResponseDTO createCar(@Valid CarRequestDTO dto) {
 		CarModel carToSave = MapperUtils.convert(dto,
 				CarModel.class);
 		carToSave.setBrand(new CarBrandModel(dto.getBrandId()));
@@ -54,7 +58,7 @@ public class CarService {
 	}
 
 	@Transactional
-	public CarFullResponseDTO updateCar(CarRequestDTO dto, long id) {
+	public CarFullResponseDTO updateCar(@Valid CarRequestDTO dto, long id) {
 		CarModel carToUpdate = MapperUtils.convert(dto,
 				CarModel.class);
 		carToUpdate.setId(id);
@@ -86,7 +90,7 @@ public class CarService {
 	}
 
 	@Transactional
-	public CarBrandResponseDTO createBrand(CarBrandRequestDTO dto) {
+	public CarBrandResponseDTO createBrand(@Valid CarBrandRequestDTO dto) {
 		return MapperUtils.convert(
 				brandRepository
 						.save(MapperUtils.convert(dto, CarBrandModel.class)),
@@ -94,7 +98,8 @@ public class CarService {
 	}
 
 	@Transactional
-	public CarBrandResponseDTO updateBrand(CarBrandRequestDTO dto, long id) {
+	public CarBrandResponseDTO updateBrand(@Valid CarBrandRequestDTO dto,
+			long id) {
 		CarBrandModel brandToUpdate = MapperUtils.convert(dto,
 				CarBrandModel.class);
 		brandToUpdate.setId(id);
