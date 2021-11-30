@@ -1,7 +1,14 @@
 package com.example.fenixveiculos.controller.v1;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,13 +22,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.example.fenixveiculos.dto.car.CarBrandRequestDTO;
 import com.example.fenixveiculos.dto.car.CarBrandResponseDTO;
 import com.example.fenixveiculos.dto.car.CarFullResponseDTO;
+import com.example.fenixveiculos.dto.car.CarImageRequestDTO;
+import com.example.fenixveiculos.dto.car.CarImageUploadResponseDTO;
 import com.example.fenixveiculos.dto.car.CarRequestDTO;
+import com.example.fenixveiculos.dto.file.FileUploadResponseDTO;
 import com.example.fenixveiculos.service.CarService;
+import com.example.fenixveiculos.service.FileService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -34,6 +46,7 @@ import lombok.RequiredArgsConstructor;
 public class CarController {
 
 	private final CarService carService;
+	private final FileService fileService;
 
 // -- CARS
 
@@ -98,6 +111,57 @@ public class CarController {
 				"Invalid car id");
 	}
 
+	@PostMapping(value = "/{id:[0-9]+}/images")
+	@Operation(summary = "Upload car images and cover image")
+	public ResponseEntity<CarImageUploadResponseDTO> uploadCarImages(
+			@PathVariable("id") Long id,
+			@RequestParam(value = "coverImage") MultipartFile coverImage,
+			@RequestParam(value = "images", required = false) MultipartFile[] images) {
+
+		String imageName = null;
+		List<String> imagesNames = new ArrayList<String>();
+
+		final String CAR_PATH_SUFIX = "/cars";
+
+		boolean canUpload = true;
+		boolean hasImages = false;
+
+		if (images != null && images.length > 0
+				&& images[0].getOriginalFilename() != null
+				&& !images[0].getOriginalFilename().isBlank()) {
+
+			canUpload = fileService.isImagesValid(images);
+			hasImages = true;
+		}
+
+		// Impede que faça upload do coverImage e depois dê erro nas images
+		if (canUpload) {
+			imageName = fileService.uploadImage(coverImage, CAR_PATH_SUFIX);
+
+			carService.updateCarImageCover(imageName, id);
+
+			if (hasImages) {
+				imagesNames = fileService.uploadImages(images, CAR_PATH_SUFIX);
+
+				imagesNames.forEach(image -> {
+					carService.saveCarImage(CarImageRequestDTO.builder()
+							.carId(id).imagePath(image).build());
+				});
+			}
+
+			return ResponseEntity.ok(CarImageUploadResponseDTO.builder()
+					.coverImage(imageName)
+					.images(imagesNames.stream()
+							.map(name -> FileUploadResponseDTO.builder()
+									.fileName(name).build())
+							.collect(Collectors.toList()))
+					.build());
+		}
+
+		throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+				"Invalid images or cover image");
+	}
+
 // -- BRANDS
 
 	@GetMapping(value = "/brands")
@@ -160,5 +224,39 @@ public class CarController {
 		}
 
 		return ResponseEntity.badRequest().body("Invalid car brand ID");
+	}
+
+// -- ALL 
+
+	@GetMapping("/images/{fileName}")
+	@Operation(summary = "Get a car or brand image file")
+	public ResponseEntity<Resource> getImageFile(
+			@PathVariable("fileName") String fileName,
+			HttpServletRequest request) {
+		Resource image = fileService.getImageAsResource(fileName, "/cars");
+
+		if (image != null) {
+			String contentType = null;
+			try {
+				contentType = request.getServletContext()
+						.getMimeType(image.getFile().getAbsolutePath());
+			} catch (IOException ex) {
+			}
+
+			// Fallback to the default content type if type could not be
+			// determined
+			if (contentType == null) {
+				contentType = "application/octet-stream";
+			}
+
+			return ResponseEntity.ok()
+					.contentType(MediaType.parseMediaType(contentType))
+					.header(HttpHeaders.CONTENT_DISPOSITION,
+							"attachment; filename=\"" + image.getFilename()
+									+ "\"")
+					.body(image);
+		}
+
+		return ResponseEntity.notFound().build();
 	}
 }

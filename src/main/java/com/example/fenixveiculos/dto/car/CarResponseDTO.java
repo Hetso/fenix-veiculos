@@ -1,5 +1,9 @@
 package com.example.fenixveiculos.dto.car;
 
+import java.util.Set;
+
+import com.example.fenixveiculos.model.CarImageModel;
+
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.Value;
@@ -14,5 +18,7 @@ import lombok.experimental.SuperBuilder;
 public class CarResponseDTO extends CarDTO {
 
 	private final Long id;
+	private final String imageCover;
+	private final Set<CarImageModel> images;
 
 }

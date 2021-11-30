@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -19,4 +20,9 @@ public interface CarRepository extends JpaRepository<CarModel, Long>,
 			+ "INNER JOIN car_brand AS cb ON c.brand_id = cb.id "
 			+ "WHERE CONCAT(cb.name, ' ', c.model, ' ', c.color, ' ', c.year, ' ', c.description, ' ', c.price) LIKE %:simpleSearch%", nativeQuery = true)
 	List<CarModel> findAllBySearch(@Param("simpleSearch") String simpleSearch);
+
+	@Modifying
+	@Query(value = "UPDATE car SET image_cover = :imageCover WHERE id = :carId", nativeQuery = true)
+	public int updateImageCover(@Param("imageCover") String imageCover,
+			@Param("carId") long carId);
 }

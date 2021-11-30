@@ -12,10 +12,13 @@ import com.example.fenixveiculos.dto.car.CarBrandFullResponseDTO;
 import com.example.fenixveiculos.dto.car.CarBrandRequestDTO;
 import com.example.fenixveiculos.dto.car.CarBrandResponseDTO;
 import com.example.fenixveiculos.dto.car.CarFullResponseDTO;
+import com.example.fenixveiculos.dto.car.CarImageRequestDTO;
 import com.example.fenixveiculos.dto.car.CarRequestDTO;
 import com.example.fenixveiculos.model.CarBrandModel;
+import com.example.fenixveiculos.model.CarImageModel;
 import com.example.fenixveiculos.model.CarModel;
 import com.example.fenixveiculos.repository.CarBrandRepository;
+import com.example.fenixveiculos.repository.CarImageRepository;
 import com.example.fenixveiculos.repository.CarRepository;
 import com.example.fenixveiculos.utils.MapperUtils;
 
@@ -28,6 +31,7 @@ import lombok.RequiredArgsConstructor;
 public class CarService {
 
 	private final CarRepository carRepository;
+	private final CarImageRepository carImageRepository;
 	private final CarBrandRepository brandRepository;
 
 //	-- CARS
@@ -70,6 +74,17 @@ public class CarService {
 	@Transactional
 	public void deleteCar(long id) {
 		carRepository.deleteById(id);
+	}
+
+	@Transactional
+	public void updateCarImageCover(String filename, long carId) {
+		carRepository.updateImageCover(filename, carId);
+	}
+
+	@Transactional
+	public void saveCarImage(@Valid CarImageRequestDTO dto) {
+		carImageRepository.save(new CarImageModel(new CarModel(dto.getCarId()),
+				dto.getImagePath()));
 	}
 
 // 	-- BRANDS

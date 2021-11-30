@@ -29,6 +29,5 @@ public abstract class CarDTO {
 	private final String color;
 
 	private final String description;
-	private final String imagePath;
 
 }
