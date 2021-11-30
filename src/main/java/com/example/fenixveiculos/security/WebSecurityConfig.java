@@ -3,12 +3,14 @@ package com.example.fenixveiculos.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.example.fenixveiculos.service.AuthenticationService;
@@ -32,6 +34,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				// session management to stateless
 				.sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+				.and()
+				// ** Custom exception handling
+				.exceptionHandling()
+				// * Default auth error handle 403
+				.authenticationEntryPoint(
+						new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
 				.and()
 				// ** endpoint permissions
 				.authorizeRequests()
