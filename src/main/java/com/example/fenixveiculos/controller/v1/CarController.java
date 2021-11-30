@@ -170,7 +170,6 @@ public class CarController {
 								.carId(id).imagePath(imgName).build());
 					}
 				});
-				;
 			}
 
 			return ResponseEntity.ok(CarImageUploadResponseDTO.builder()
