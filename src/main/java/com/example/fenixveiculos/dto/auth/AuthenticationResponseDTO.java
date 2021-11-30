@@ -2,12 +2,16 @@ package com.example.fenixveiculos.dto.auth;
 
 import com.example.fenixveiculos.dto.user.UserResponseDTO;
 
-import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.Value;
+import lombok.experimental.SuperBuilder;
 
-@Data
-public class AuthenticationResponseDTO {
+@Value
+@SuperBuilder
+@NoArgsConstructor(force = true)
+public final class AuthenticationResponseDTO {
 
 	private final String token;
-	private UserResponseDTO user;
+	private final UserResponseDTO user;
 
 }

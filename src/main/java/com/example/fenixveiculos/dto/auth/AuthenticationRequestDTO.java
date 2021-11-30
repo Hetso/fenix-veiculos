@@ -1,12 +1,20 @@
 package com.example.fenixveiculos.dto.auth;
 
-import lombok.Data;
+import javax.validation.constraints.NotBlank;
 
-@Data
-public class AuthenticationRequestDTO {
+import lombok.NoArgsConstructor;
+import lombok.Value;
+import lombok.experimental.SuperBuilder;
 
-	private String login;
+@Value
+@SuperBuilder
+@NoArgsConstructor(force = true)
+public final class AuthenticationRequestDTO {
 
-	private String password;
+	@NotBlank(message = "Login is required (username or email)")
+	private final String login;
+
+	@NotBlank(message = "Password is required")
+	private final String password;
 
 }
