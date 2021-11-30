@@ -2,6 +2,7 @@ package com.example.fenixveiculos.service;
 
 import java.util.Optional;
 
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,8 +23,9 @@ public class AuthenticationService implements UserDetailsService {
 	private final UserRepository userRepository;
 
 	public UserModel getCurrentUser() {
-		if (!SecurityContextHolder.getContext().getAuthentication()
-				.isAuthenticated()) {
+
+		if (SecurityContextHolder.getContext()
+				.getAuthentication() instanceof AnonymousAuthenticationToken) {
 			return null;
 		}
 

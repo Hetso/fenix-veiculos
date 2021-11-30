@@ -46,6 +46,15 @@ module.config(['$stateProvider', '$translateProvider', '$urlRouterProvider', '$l
             },
             controllerAs: 'rslvr'
         })
+        .state('login', {   
+            url: '/login',
+            template: '<fv-login></fv-login>',
+            resolve: carsResolver,
+            controller: function(cars) {
+                this.cars = cars;
+            },
+            controllerAs: 'rslvr'
+        })
 
     $urlRouterProvider.otherwise('/');
 
@@ -112,3 +121,44 @@ module.config(['$stateProvider', '$translateProvider', '$urlRouterProvider', '$l
             .icon('sort-ascending', 'svg/sort-ascending.svg')
             .icon('sort-descending', 'svg/sort-descending.svg');
 }]);
+
+module.run(function($rootScope, AuthenticationService) {
+    AuthenticationService.getCurrentUser()
+    .then(function(data) {
+        $rootScope.currentUser = data;
+    });
+});
+
+module.factory('fvHttpInterceptor', function ($q, $window) {
+    //
+    return {
+        'request': function (config) {
+            if(!$window.jwtToken && localStorage.getItem('jwt')) {
+                $window.jwtToken = localStorage.getItem('jwt');
+            }
+
+            if (angular.isDefined($window.jwtToken) && $window.jwtToken !== null) {
+                config.headers['Authorization'] = 'Bearer ' + $window.jwtToken;
+            } 
+
+            return config;
+        },
+        'response': function (response) {
+
+            return response;
+        },
+        'responseError': function (rejection) {
+            // if the session has been lost, trigger a reload
+            if (rejection.status === 401) {
+                $window.location = '/login';
+            }
+
+            return $q.reject(rejection);
+        }
+    };
+});
+
+module.config(function ($httpProvider) {
+    $httpProvider.interceptors.push('fvHttpInterceptor');
+    $httpProvider.useApplyAsync(true);
+});

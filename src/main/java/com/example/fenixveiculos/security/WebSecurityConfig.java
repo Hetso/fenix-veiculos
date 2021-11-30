@@ -41,14 +41,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.authenticationEntryPoint(
 						new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
 				.and()
-				// ** endpoint permissions
 				.authorizeRequests()
 				.antMatchers("/").permitAll()
-				.antMatchers("/api/v1/auth/currentUser").authenticated()
-				// * public endpoints
+				.antMatchers("/login").permitAll()
 				.antMatchers("/api/v1/auth/**").permitAll()
 				.antMatchers(HttpMethod.GET, "/api/v1/cars/**").permitAll()
-				// * restrict endpoints
 				.antMatchers("/api/v1/**").authenticated()
 				// filters
 				.and().addFilterBefore(jwtFilter,
