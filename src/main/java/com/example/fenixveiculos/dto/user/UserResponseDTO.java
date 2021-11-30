@@ -1,4 +1,4 @@
-package com.example.fenixveiculos.dto;
+package com.example.fenixveiculos.dto.user;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

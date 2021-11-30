@@ -1,4 +1,6 @@
-package com.example.fenixveiculos.dto;
+package com.example.fenixveiculos.dto.auth;
+
+import com.example.fenixveiculos.dto.user.UserResponseDTO;
 
 import lombok.Data;
 

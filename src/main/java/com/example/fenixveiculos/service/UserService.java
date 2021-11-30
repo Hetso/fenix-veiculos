@@ -4,8 +4,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.fenixveiculos.dto.UserRequestDTO;
-import com.example.fenixveiculos.dto.UserResponseDTO;
+import com.example.fenixveiculos.dto.user.UserRequestDTO;
+import com.example.fenixveiculos.dto.user.UserResponseDTO;
 import com.example.fenixveiculos.model.UserModel;
 import com.example.fenixveiculos.repository.UserRepository;
 import com.example.fenixveiculos.utils.EncoderUtils;

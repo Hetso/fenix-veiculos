@@ -1,5 +1,6 @@
-package com.example.fenixveiculos.dto;
+package com.example.fenixveiculos.dto.car;
 
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.Value;
 import lombok.experimental.NonFinal;
@@ -9,7 +10,9 @@ import lombok.experimental.SuperBuilder;
 @NonFinal
 @SuperBuilder
 @NoArgsConstructor(force = true)
-public abstract class CarBrandDTO {
+@EqualsAndHashCode(callSuper = false)
+public class CarBrandResponseDTO extends CarBrandDTO {
 
-	private final String name;
+	private final Long id;
+
 }

@@ -1,4 +1,4 @@
-package com.example.fenixveiculos.dto;
+package com.example.fenixveiculos.dto.user;
 
 import com.example.fenixveiculos.model.UserModel.UserGender;
 

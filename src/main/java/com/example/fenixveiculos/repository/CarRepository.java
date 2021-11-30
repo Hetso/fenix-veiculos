@@ -14,6 +14,9 @@ import com.example.fenixveiculos.model.CarModel;
 public interface CarRepository extends JpaRepository<CarModel, Long>,
 		JpaSpecificationExecutor<CarModel> {
 
-	@Query(value = "SELECT * FROM car AS c WHERE CONCAT(c.brand, ' ', c.model, ' ', c.color, ' ', c.year, ' ', c.description, ' ', c.price) LIKE %:simpleSearch%", nativeQuery = true)
+	@Query(value = "SELECT * "
+			+ "FROM car AS c "
+			+ "INNER JOIN car_brand AS cb ON c.brand_id = cb.id "
+			+ "WHERE CONCAT(cb.name, ' ', c.model, ' ', c.color, ' ', c.year, ' ', c.description, ' ', c.price) LIKE %:simpleSearch%", nativeQuery = true)
 	List<CarModel> findAllBySearch(@Param("simpleSearch") String simpleSearch);
 }

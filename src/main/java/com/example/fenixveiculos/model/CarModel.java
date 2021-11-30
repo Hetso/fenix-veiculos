@@ -36,7 +36,7 @@ public class CarModel {
 
 	@ManyToOne
 	@JsonBackReference
-	@JoinColumn(name = "brand_id", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name = "brand_id", nullable = false)
 	private CarBrandModel brand;
 
 	@Column(name = "model", nullable = false)

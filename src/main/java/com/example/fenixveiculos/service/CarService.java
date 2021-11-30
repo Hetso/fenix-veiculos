@@ -1,16 +1,15 @@
 package com.example.fenixveiculos.service;
 
 import java.util.List;
-import java.util.Optional;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.fenixveiculos.dto.CarBrandFullResponseDTO;
-import com.example.fenixveiculos.dto.CarBrandRequestDTO;
-import com.example.fenixveiculos.dto.CarBrandResponseDTO;
-import com.example.fenixveiculos.dto.CarDTO;
+import com.example.fenixveiculos.dto.car.CarBrandFullResponseDTO;
+import com.example.fenixveiculos.dto.car.CarBrandRequestDTO;
+import com.example.fenixveiculos.dto.car.CarBrandResponseDTO;
+import com.example.fenixveiculos.dto.car.CarFullResponseDTO;
+import com.example.fenixveiculos.dto.car.CarRequestDTO;
 import com.example.fenixveiculos.model.CarBrandModel;
 import com.example.fenixveiculos.model.CarModel;
 import com.example.fenixveiculos.repository.CarBrandRepository;
@@ -26,37 +25,42 @@ public class CarService {
 
 	private final CarRepository carRepository;
 	private final CarBrandRepository brandRepository;
-	private final ModelMapper modelMapper;
 
 //	-- CARS
 
-	public List<CarModel> findAllCars() {
-		return carRepository.findAll();
+	public List<CarFullResponseDTO> findAllCars() {
+		return MapperUtils.convert(carRepository.findAll(),
+				CarFullResponseDTO.class);
 	}
 
-	public List<CarModel> findAllCars(String simpleSearch) {
-		return carRepository.findAllBySearch(simpleSearch);
+	public List<CarFullResponseDTO> findAllCars(String simpleSearch) {
+		return MapperUtils.convert(carRepository.findAllBySearch(simpleSearch),
+				CarFullResponseDTO.class);
 	}
 
-	public Optional<CarModel> findCarById(long id) {
-		return carRepository.findById(id);
+	public CarFullResponseDTO findCarById(long id) {
+		return MapperUtils.convert(carRepository.findById(id),
+				CarFullResponseDTO.class);
 	}
 
 	@Transactional
-	public CarModel createCar(CarDTO carDTO) {
-		CarModel carToSave = modelMapper.map(carDTO,
+	public CarFullResponseDTO createCar(CarRequestDTO dto) {
+		CarModel carToSave = MapperUtils.convert(dto,
 				CarModel.class);
-		carToSave.setBrand(new CarBrandModel(carDTO.getBrandId()));
+		carToSave.setBrand(new CarBrandModel(dto.getBrandId()));
 
-		return carRepository.save(carToSave);
+		return MapperUtils.convert(carRepository.save(carToSave),
+				CarFullResponseDTO.class);
 	}
 
 	@Transactional
-	public CarModel updateCar(CarDTO carDTO, long id) {
-		CarModel carToUpdate = modelMapper.map(carDTO, CarModel.class);
+	public CarFullResponseDTO updateCar(CarRequestDTO dto, long id) {
+		CarModel carToUpdate = MapperUtils.convert(dto,
+				CarModel.class);
 		carToUpdate.setId(id);
 
-		return carRepository.save(carToUpdate);
+		return MapperUtils.convert(carRepository.save(carToUpdate),
+				CarFullResponseDTO.class);
 	}
 
 	@Transactional

@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.example.fenixveiculos.dto.UserRequestDTO;
-import com.example.fenixveiculos.dto.UserResponseDTO;
+import com.example.fenixveiculos.dto.user.UserRequestDTO;
+import com.example.fenixveiculos.dto.user.UserResponseDTO;
 import com.example.fenixveiculos.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;

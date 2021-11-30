@@ -1,7 +1,6 @@
 package com.example.fenixveiculos.controller.v1;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.example.fenixveiculos.dto.CarBrandRequestDTO;
-import com.example.fenixveiculos.dto.CarBrandResponseDTO;
-import com.example.fenixveiculos.dto.CarDTO;
-import com.example.fenixveiculos.model.CarModel;
+import com.example.fenixveiculos.dto.car.CarBrandRequestDTO;
+import com.example.fenixveiculos.dto.car.CarBrandResponseDTO;
+import com.example.fenixveiculos.dto.car.CarFullResponseDTO;
+import com.example.fenixveiculos.dto.car.CarRequestDTO;
 import com.example.fenixveiculos.service.CarService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -39,7 +38,7 @@ public class CarController {
 
 	@GetMapping
 	@Operation(summary = "Get all cars (with simple search filter)")
-	public ResponseEntity<List<CarModel>> getAllCars(
+	public ResponseEntity<List<CarFullResponseDTO>> getAllCars(
 			@RequestParam(name = "simpleSearch", required = false) String simpleSearch) {
 
 		if (simpleSearch != null && !simpleSearch.isEmpty()) {
@@ -51,12 +50,12 @@ public class CarController {
 
 	@GetMapping(value = "/{id:[0-9]+}")
 	@Operation(summary = "Get a car by id")
-	public ResponseEntity<CarModel> getCarById(
+	public ResponseEntity<CarFullResponseDTO> getCarById(
 			@PathVariable("id") Long id) {
-		Optional<CarModel> car = carService.findCarById(id);
+		CarFullResponseDTO car = carService.findCarById(id);
 
-		if (car.isPresent()) {
-			return ResponseEntity.ok(car.get());
+		if (car != null) {
+			return ResponseEntity.ok(car);
 		}
 
 		return ResponseEntity.noContent().build();
@@ -64,32 +63,38 @@ public class CarController {
 
 	@PostMapping
 	@Operation(summary = "Create a new car")
-	public ResponseEntity<CarModel> createCar(@RequestBody CarDTO carDTO) {
-		return ResponseEntity.ok(carService.createCar(carDTO));
+	public ResponseEntity<CarFullResponseDTO> createCar(
+			@RequestBody CarRequestDTO dto) {
+
+		return ResponseEntity.status(HttpStatus.CREATED)
+				.body(carService.createCar(dto));
 	}
 
 	@PutMapping(value = "/{id:[0-9]+}")
 	@Operation(summary = "Update a car by id")
-	public ResponseEntity<String> updateCar(@PathVariable("id") Long id,
-			@RequestBody CarDTO carDTO) {
+	public ResponseEntity<CarFullResponseDTO> updateCar(
+			@PathVariable("id") Long id,
+			@RequestBody CarRequestDTO dto) {
 
-		if (carService.findCarById(id).isPresent()) {
-			return ResponseEntity.ok("Updated");
+		if (carService.findCarById(id) != null) {
+			return ResponseEntity.ok(carService.updateCar(dto, id));
 		}
 
-		return ResponseEntity.badRequest().body("Invalid car ID");
+		throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+				"Invalid car id");
 	}
 
 	@DeleteMapping(value = "/{id:[0-9]+}")
 	@Operation(summary = "Delete a car by id")
 	public ResponseEntity<String> deleteCar(@PathVariable("id") Long id) {
 
-		if (carService.findCarById(id).isPresent()) {
+		if (carService.findCarById(id) != null) {
 			carService.deleteCar(id);
 			return ResponseEntity.noContent().build();
 		}
 
-		return ResponseEntity.badRequest().body("Invalid car ID");
+		throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+				"Invalid car id");
 	}
 
 // -- BRANDS

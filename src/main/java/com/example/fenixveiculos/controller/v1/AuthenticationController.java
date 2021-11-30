@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.fenixveiculos.dto.AuthenticationRequestDTO;
-import com.example.fenixveiculos.dto.AuthenticationResponseDTO;
-import com.example.fenixveiculos.dto.UserResponseDTO;
+import com.example.fenixveiculos.dto.auth.AuthenticationRequestDTO;
+import com.example.fenixveiculos.dto.auth.AuthenticationResponseDTO;
+import com.example.fenixveiculos.dto.user.UserResponseDTO;
 import com.example.fenixveiculos.model.UserModel;
 import com.example.fenixveiculos.service.AuthenticationService;
 import com.example.fenixveiculos.service.JwtTokenService;
