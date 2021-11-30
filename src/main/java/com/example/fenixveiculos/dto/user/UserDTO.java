@@ -1,20 +1,34 @@
 package com.example.fenixveiculos.dto.user;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import com.example.fenixveiculos.model.UserModel.UserGender;
 
-import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.Value;
+import lombok.experimental.NonFinal;
+import lombok.experimental.SuperBuilder;
 
-@Data
-abstract class UserDTO {
+@Value
+@NonFinal
+@SuperBuilder
+@NoArgsConstructor(force = true)
+public abstract class UserDTO {
 
-	private String email;
+	@NotBlank(message = "Email is required")
+	private final String email;
 
-	private String username;
+	@NotBlank(message = "Username is required")
+	private final String username;
 
-	private String firstname;
+	@NotBlank(message = "Firstname is required")
+	private final String firstname;
 
-	private String lastname;
+	@NotBlank(message = "Lastname is required")
+	private final String lastname;
 
+	@NotNull(message = "Gender is required")
 	private UserGender gender;
 
 }

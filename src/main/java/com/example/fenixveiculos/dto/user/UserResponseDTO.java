@@ -1,11 +1,15 @@
 package com.example.fenixveiculos.dto.user;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.Value;
+import lombok.experimental.SuperBuilder;
 
-@Data
+@Value
+@SuperBuilder
+@NoArgsConstructor(force = true)
 @EqualsAndHashCode(callSuper = false)
 public class UserResponseDTO extends UserDTO {
 
-	private Long id;
+	private final Long id;
 }
