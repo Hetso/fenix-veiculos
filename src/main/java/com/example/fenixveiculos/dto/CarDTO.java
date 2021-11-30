@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CarDTO {
 
-	private String brand;
+	private Long brandId;
 	private String model;
 	private Integer year;
 	private BigDecimal price;
