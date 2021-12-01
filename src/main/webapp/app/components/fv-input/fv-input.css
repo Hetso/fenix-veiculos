@@ -1,17 +1,24 @@
-.fv-input md-input-container {
+.fv-input-content md-input-container {
     background-color: #fff;
-    border: var(--default-border);
 }
 
-.fv-input md-input-container.md-flex {
+.fv-input-content md-input-container.md-flex {
     display: flex;
     flex-direction: row-reverse;
 }
 
-.fv-input md-input-container input {
-    border: none;
+.fv-input-content md-input-container.md-block {
+    max-height: 45px;
 }
 
-.fv-input {
+.fv-input-content md-input-container.md-input-focused input {
+    border: 1px solid var(--accent);
+}
+
+.fv-input-content {
     margin-top: 25px;
+}
+
+fv-input {
+    width: 100%;
 }

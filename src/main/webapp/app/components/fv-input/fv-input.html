@@ -1,8 +1,7 @@
-<div class="fv-input">
+<div class="fv-input-content">
     <md-input-container ng-class="$ctrl.icon ? 'md-flex' : 'md-block'">
         <label>{{$ctrl.label}}</label>
-        <input name="{{$ctrl.name}}" type="{{$ctrl.type}}" ng-model="$ctrl.model" autocomplete="off"
-            md-autofocus="{{$ctrl.autofocus ? 'true' : 'false'}}" ng-keyup="$event.keyCode == 13 && $ctrl.enterCallback()">
+        <input name="{{$ctrl.name}}" type="{{$ctrl.type}}" ng-model="$ctrl.model" autocomplete="off" md-autofocus="{{$ctrl.autofocus ? 'true' : 'false'}}" ng-keyup="$event.keyCode == 13 && $ctrl.enterCallback()" ng-required="required">
         <md-button class="md-icon-button" ng-click="$ctrl.iconCallback()" ng-if="$ctrl.icon">
             <md-tooltip ng-if="$ctrl.iconTooltip">{{$ctrl.iconTooltip}}</md-tooltip>
             <md-icon md-svg-icon="{{$ctrl.icon}}"></md-icon>

@@ -49,11 +49,6 @@ module.config(['$stateProvider', '$translateProvider', '$urlRouterProvider', '$l
         .state('login', {   
             url: '/login',
             template: '<fv-login></fv-login>',
-            resolve: carsResolver,
-            controller: function(cars) {
-                this.cars = cars;
-            },
-            controllerAs: 'rslvr'
         })
 
     $urlRouterProvider.otherwise('/');

@@ -1,3 +1,6 @@
 <nav class="nav-content">
     <h1 style="color: #fff; padding: 5px 10px">navbar</h1>
+    <div class="user-info" ng-if="$root.currentUser">
+        <span>{{$root.currentUser.firstname + ' ' + $root.currentUser.lastname}}</span>
+    </div>
 </nav>

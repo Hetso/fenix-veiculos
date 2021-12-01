@@ -1,4 +1,4 @@
-(function () {
+(function() {
     'use strict';
 
     var components = angular.module('fv')
@@ -15,14 +15,15 @@
             icon: '@',
             iconTooltip: '@',
             iconCallback: '<',
-            enterCallback: '<'
+            enterCallback: '<',
+            required: '@'
         }
     })
 
     function InputController($scope) {
 
-        this.$onInit = function init(){
-            
+        this.$onInit = function init() {
+            $scope.required = this.required !== undefined && this.required !== 'false'
         }
     }
 
