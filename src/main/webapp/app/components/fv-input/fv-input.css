@@ -12,7 +12,7 @@
 }
 
 .fv-input-content md-input-container.md-input-focused input {
-    border: 1px solid var(--accent);
+    border: 1px solid var(--accent) !important;
 }
 
 .fv-input-content {

@@ -27,11 +27,18 @@ module.config(['$stateProvider', '$translateProvider', '$urlRouterProvider', '$l
     $translateProvider.preferredLanguage('pt_BR');
 
 
+    const brandsResolver = {
+        brands: function(CarService) {
+            return CarService.findAllBrands();
+        }
+    }
+
     // RESOLVERS
     const carsResolver = {
         cars: function(CarService) {
             return CarService.findAllCars();
-        }
+        },
+        brands: brandsResolver.brands
     }
 
     // ROTAS ui-router
@@ -39,16 +46,40 @@ module.config(['$stateProvider', '$translateProvider', '$urlRouterProvider', '$l
     $stateProvider
         .state('home', {   
             url: '/',
-            template: '<fv-home cars="rslvr.cars"></fv-home>',
-            resolve: carsResolver,
-            controller: function(cars) {
-                this.cars = cars;
-            },
-            controllerAs: 'rslvr'
+            template: '<fv-home class="main-content"></fv-home>',
         })
         .state('login', {   
             url: '/login',
-            template: '<fv-login></fv-login>',
+            template: '<fv-login class="main-content" ></fv-login>',
+        })
+        // admin
+        .state('admin', {   
+            url: '/admin',
+            template: '<fv-admin></fv-admin>',
+            abstract: true
+        })
+        .state('admin.home', {
+            url: '',
+            template: '<fv-admin-cars cars="rslvr.cars" brands="rslvr.brands"></fv-admin-cars>',
+            resolve: carsResolver,
+            controller: function(cars, brands) {
+                this.cars = cars;
+                this.brands = brands;
+            },
+            controllerAs: 'rslvr'
+        })
+        .state('admin.brands', {
+            url: '/brands',
+            template: '<fv-admin-brands brands="rslvr.brands"></fv-admin-brands>',
+            resolve: brandsResolver,
+            controller: function(brands) {
+                this.brands = brands;
+            },
+            controllerAs: 'rslvr'
+        })
+        .state('admin.users', {
+            url: '/users',
+            template: '<fv-admin-users></fv-admin-users>'
         })
 
     $urlRouterProvider.otherwise('/');

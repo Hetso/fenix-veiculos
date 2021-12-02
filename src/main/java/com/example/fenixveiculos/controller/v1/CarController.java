@@ -201,7 +201,12 @@ public class CarController {
 
 	@GetMapping(value = "/brands")
 	@Operation(summary = "Get all car brands")
-	public ResponseEntity<List<CarBrandResponseDTO>> getAllCarBrands() {
+	public ResponseEntity<List<CarBrandResponseDTO>> getAllCarBrands(
+			@RequestParam(name = "search", required = false) String search) {
+
+		if (search != null && !search.isEmpty()) {
+			return ResponseEntity.ok(carService.findAllBrands(search));
+		}
 
 		return ResponseEntity.ok(carService.findAllBrands());
 	}

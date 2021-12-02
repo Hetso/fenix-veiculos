@@ -1,0 +1,18 @@
+<md-dialog style="width: 30%;">
+    <form name="ctrl.removeBrandForm" data-ng-submit="ctrl.removeBrand(ctrl.currentBrand)">
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <h3 class="md-padding">Deseja remover esta marca?</h3>
+                <div class="md-padding">
+                    <span>
+                        {{ctrl.currentBrand.name}} 
+                    </span>
+                </div>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions>
+            <md-button type="button" ng-click="ctrl.close()"><span>Cancelar</span></md-button>
+            <md-button type="submit" ><span>Remover</span></md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

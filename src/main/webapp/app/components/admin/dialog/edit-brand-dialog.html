@@ -1,0 +1,17 @@
+<md-dialog style="width: 30%;">
+    <form name="ctrl.editBrandForm" data-ng-submit="ctrl.saveBrand(ctrl.editingBrand)">
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <h2 class="md-title">{{ctrl.editingBrand.id ? 'Editar Marca' : 'Adicionar Marca'}}</h2>
+                <md-input-container class="md-block">
+                    <label>Nome</label>
+                    <input name="name" type="text" ng-model="ctrl.editingBrand.name" autocomplete="off" required md-autofocus>
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions>
+            <md-button type="button" ng-click="ctrl.close()"><span>Cancelar</span></md-button>
+            <md-button type="submit" ng-disabled="!ctrl.editBrandForm.$valid"><span>Salvar</span></md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

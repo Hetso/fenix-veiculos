@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -37,7 +38,8 @@ public class CarService {
 //	-- CARS
 
 	public List<CarFullResponseDTO> findAllCars() {
-		return MapperUtils.convert(carRepository.findAll(),
+		return MapperUtils.convert(
+				carRepository.findAll(Sort.by(Sort.Direction.DESC, "id")),
 				CarFullResponseDTO.class);
 	}
 
@@ -56,6 +58,7 @@ public class CarService {
 		CarModel carToSave = MapperUtils.convert(dto,
 				CarModel.class);
 		carToSave.setBrand(new CarBrandModel(dto.getBrandId()));
+		carToSave.setId(null);
 
 		return MapperUtils.convert(carRepository.save(carToSave),
 				CarFullResponseDTO.class);
@@ -108,7 +111,13 @@ public class CarService {
 	}
 
 	public List<CarBrandResponseDTO> findAllBrands() {
-		return MapperUtils.convert(brandRepository.findAll(),
+		return MapperUtils.convert(
+				brandRepository.findAll(Sort.by(Sort.Direction.DESC, "id")),
+				CarBrandResponseDTO.class);
+	}
+
+	public List<CarBrandResponseDTO> findAllBrands(String search) {
+		return MapperUtils.convert(brandRepository.searchBrands(search),
 				CarBrandResponseDTO.class);
 	}
 

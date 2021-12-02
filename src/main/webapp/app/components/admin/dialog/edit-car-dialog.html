@@ -5,8 +5,9 @@
                 <h2 class="md-title">{{editCarCtrl.editingCar.id ? 'Editar Carro' : 'Adicionar Carro'}}</h2>
                 <md-input-container class="md-block">
                     <label>Marca</label>
-                    <input name="brand" type="text" ng-model="editCarCtrl.editingCar.brand" autocomplete="off" required
-                        md-autofocus>
+                    <md-select ng-model="editCarCtrl.editingCar.brand" placeholder="Selecione uma marca">
+                        <md-option ng-selected="editCarCtrl.editingCar.brand.id === brand.id" ng-value="brand" ng-repeat="brand in editCarCtrl.brands">{{ brand.name }}</md-option>
+                    </md-select>
                 </md-input-container>
                 <md-input-container class="md-block">
                     <label>Modelo</label>
@@ -30,12 +31,12 @@
                     <label>Descrição</label>
                     <textarea name="description" ng-model="editCarCtrl.editingCar.description" autocomplete="off"
                         rows="5"></textarea>
-            </md-input-container>
+                </md-input-container>
             </div>
         </md-dialog-content>
         <md-dialog-actions>
-	        <md-button type="button" ng-click="editCarCtrl.close()"><span>Cancelar</span></md-button>
+            <md-button type="button" ng-click="editCarCtrl.close()"><span>Cancelar</span></md-button>
             <md-button type="submit" ng-disabled="!editCarCtrl.editCarForm.$valid"><span>Salvar</span></md-button>
         </md-dialog-actions>
-	</form>
+    </form>
 </md-dialog>

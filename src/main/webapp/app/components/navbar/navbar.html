@@ -1,6 +1,28 @@
 <nav class="nav-content">
-    <h1 style="color: #fff; padding: 5px 10px">navbar</h1>
-    <div class="user-info" ng-if="$root.currentUser">
-        <span>{{$root.currentUser.firstname + ' ' + $root.currentUser.lastname}}</span>
+    <div class="n-left">
+        <h1 style="color: #fff; padding: 5px 10px">navbar</h1>
+    </div>
+
+    <!-- Rotas -->
+    <div class="n-center">
+        <md-tabs md-center-tabs md-no-select-click>
+            <md-tab data-ui-sref="home" md-active="isState('home')">
+                <md-tab-label>Início</md-tab-label>
+            </md-tab>
+            <md-tab data-ui-sref="admin.home" md-active="isState('admin')" ng-if="$root.currentUser">
+                <md-tab-label>Painel administrativo</md-tab-label>
+            </md-tab>
+        </md-tabs>
+    </div>
+
+    <!-- Current user info -->
+    <div class="n-right">
+        <div class="user-info" ng-if="$root.currentUser">
+            <span>{{$root.currentUser.firstname + ' ' + $root.currentUser.lastname}}</span>
+            <md-button class="md-icon-button" ng-click="logout()">
+                <md-tooltip>Sair</md-tooltip>
+                <md-icon md-svg-icon="logout"></md-icon>
+            </md-button>
+        </div>
     </div>
 </nav>

@@ -53,8 +53,8 @@
 
             // brands
 
-            findAllBrands: function() {
-                return $http.get(prefixV1 + '/brands').then(extractData)
+            findAllBrands: function(simpleSearch) {
+                return $http.get(prefixV1 + '/brands' + (simpleSearch ? '?search=' + simpleSearch : '')).then(extractData)
             },
             findBrandById: function(id) {
                 return $http.get(prefixV1 + '/brands/' + id).then(extractData)

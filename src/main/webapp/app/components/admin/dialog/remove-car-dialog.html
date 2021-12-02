@@ -1,0 +1,21 @@
+<md-dialog style="width: 30%;">
+    <form name="removeCarCtrl.editCarForm" data-ng-submit="removeCarCtrl.removeCar(removeCarCtrl.currentCar)">
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <h3 class="md-padding">Deseja remover este carro?</h3>
+                <div class="md-padding">
+                    <span>
+                        {{removeCarCtrl.currentCar.brand.name}} 
+                        {{removeCarCtrl.currentCar.model}} 
+                        {{removeCarCtrl.currentCar.year}} 
+                        {{removeCarCtrl.currentCar.color}}
+                    </span>
+                </div>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions>
+            <md-button type="button" ng-click="removeCarCtrl.close()"><span>Cancelar</span></md-button>
+            <md-button type="submit"><span>Remover</span></md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

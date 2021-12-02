@@ -1,5 +1,6 @@
 package com.example.fenixveiculos.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,4 +20,7 @@ public interface CarBrandRepository extends JpaRepository<CarBrandModel, Long>,
 	@Query(value = "UPDATE car_brand SET logo = :logo WHERE id = :brandId", nativeQuery = true)
 	public int updateLogo(@Param("logo") String logo,
 			@Param("brandId") long brandId);
+
+	@Query(value = "SELECT * from car_brand where name LIKE %:search%", nativeQuery = true)
+	public List<CarBrandModel> searchBrands(@Param("search") String search);
 }

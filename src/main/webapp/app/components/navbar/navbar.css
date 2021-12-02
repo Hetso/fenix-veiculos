@@ -1,5 +1,30 @@
 .nav-content {
     height: 85px;
     background-color: var(--main);
-    color: #fff;
+    color: var(--nav-font-color);
+    display: grid;
+    grid-template-columns: auto 70% auto;
+    align-items: center;
+    padding: 0px 50px;
+}
+
+.nav-content .n-center {
+    justify-self: center;
+}
+
+.nav-content .n-right {
+    justify-self: flex-end;
+}
+
+.nav-content md-tabs {
+    border: none;
+}
+
+.nav-content md-tabs-canvas.md-center-tabs .md-tab {
+    color: var(--nav-font-color) !important;
+    font-size: 16px;
+}
+
+.nav-content md-icon svg {
+    fill: var(--nav-font-color);
 }

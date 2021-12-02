@@ -5,14 +5,25 @@
 
     components.component('fvNav', {
         templateUrl: 'app/components/navbar/navbar.html',
-        controller: ['$scope', HomeController],
+        controller: ['$scope', '$state', 'AuthenticationService', HomeController],
         bindings: {
         }
     })
 
-    function HomeController($scope) {
+    function HomeController($scope, $state, AuthenticationService) {
 
         this.$onInit = function init(){
+        }
+
+        $scope.isState = function(name) {
+           return $state.includes(name);
+        }
+
+        $scope.logout = function() {
+            AuthenticationService.logout()
+            .then(res => {
+                window.location = "/";
+            })
         }
     }
 
