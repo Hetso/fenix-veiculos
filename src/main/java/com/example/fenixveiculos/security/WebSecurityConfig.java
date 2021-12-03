@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.access.AccessDeniedHandlerImpl;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -34,21 +35,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				// session management to stateless
 				.sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-				.and()
+				.and();
+
+		http
 				// ** Custom exception handling
 				.exceptionHandling()
-				// * Default auth error handle 403
 				.authenticationEntryPoint(
 						new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+				.accessDeniedHandler(new AccessDeniedHandlerImpl())
 				.and()
 				.authorizeRequests()
 				.antMatchers("/api/v1/auth/**").permitAll()
 				.antMatchers(HttpMethod.GET, "/api/v1/cars/**").permitAll()
 				.antMatchers("/api/v1/**").authenticated()
 				.antMatchers("/**").permitAll()
-				// filters
-				.and().addFilterBefore(jwtFilter,
-						UsernamePasswordAuthenticationFilter.class);
+				.and();
+
+//		 filters
+		http.addFilterBefore(jwtFilter,
+				UsernamePasswordAuthenticationFilter.class);
 	}
 
 	@Override

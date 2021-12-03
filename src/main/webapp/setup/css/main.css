@@ -1,0 +1,119 @@
+:root {
+    --main: rgb(29, 108, 255);
+    --main-hover: rgb(4, 65, 179);
+    --accent: rgb(251, 142, 0);
+    --accent-hover: rgb(255 178 78);
+    --font-color-main: rgb(15, 15, 15);
+    --font-color-accent: #fff;
+    --bg: rgb(219, 216, 216);
+    --default-border: 1px solid rgb(197, 197, 197);
+    --btn-width: 150px;
+    --btn-height: 40px;
+    --nav-font-color: #fff;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+* {
+    font-family: 'Roboto', sans-serif !important;
+}
+
+
+/* RESET */
+
+* {
+    box-sizing: border-box;
+    padding: 0px;
+    margin: 0px;
+}
+
+html,
+body {
+    color: var(--font-color-main);
+    height: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+main {
+    height: 100%;
+}
+
+fv-setup {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.setup-content {
+    margin-top: 50px;
+    box-shadow: 0px 5px 10px 3px #d6d6d6;
+    max-width: 500px;
+    padding: 25px 50px;
+}
+
+.setup-content form {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+}
+
+.setup-content form > div {
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+}
+
+.setup-content form > div > input {
+    margin: 5px 0px;
+    height: 30px;
+    border: 1px solid #d4d4d4;
+    outline: none !important;
+    padding: 5px;
+}
+
+.setup-content form > div > input:focus {
+    border-color: rgb(0, 113, 219);
+}
+
+.setup-content form > div > input.ng-invalid.ng-dirty {
+    border-color:rgb(246, 79, 79);
+}
+
+.setup-content form > button {
+    margin-top: 25px;
+    align-self: center;
+}
+
+a,
+button {
+    text-decoration: none;
+    color: var(--font-color-accent);
+    cursor: pointer;
+}
+
+button[disabled] {
+    background-color: #bfbfbf;
+    cursor: default;
+}
+
+.btn-main {
+    width: var(--btn-width);
+    height: var(--btn-height);
+    background-color: var(--accent);
+    border: none;
+    transition: 0.5s;
+}
+
+.btn-main:not([disabled]):hover {
+    background-color: var(--accent-hover);
+    transition: 0.5s;
+    transform: scale(1.05, 1.05);
+}
+
+button:focus {
+    outline: none;
+    box-shadow: none;
+}

@@ -1,0 +1,22 @@
+<div class="setup-content">
+    <h3 class="title">Crie o usuário administrador</h3>
+    <form ng-submit="setup()" name="setupForm">
+        <div>
+            <label for="name">Nome de usuário (login)</label>
+            <input type="text" name="name" ng-model="user.username" required>
+        </div>
+        <div>
+            <label for="email">Email</label>
+            <input type="text" name="email" ng-model="user.email" required ng-pattern="/^\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b$/">
+        </div>
+        <div>
+            <label for="password">Senha</label>
+            <input type="password" name="password" ng-model="user.password" required>
+        </div>
+        <div>
+            <label for="confirmPassword">Confirmar senha</label>
+            <input type="password" name="confirmPassword" ng-model="user.confirmPassword" required ng-class="{'ng-invalid': user.confirmPassword && user.confirmPassword !== user.password}">
+        </div>
+        <button class="btn-main" type="submit" ng-disabled="setupForm.$invalid || user.confirmPassword !== user.password">Concluir</button>
+    </form>
+</div>
