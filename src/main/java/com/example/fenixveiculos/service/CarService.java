@@ -69,6 +69,7 @@ public class CarService {
 		CarModel carToUpdate = MapperUtils.convert(dto,
 				CarModel.class);
 		carToUpdate.setId(id);
+		carToUpdate.setCoverImage(carRepository.findCoverImageById(id));
 
 		return MapperUtils.convert(carRepository.save(carToUpdate),
 				CarFullResponseDTO.class);
@@ -141,6 +142,7 @@ public class CarService {
 		CarBrandModel brandToUpdate = MapperUtils.convert(dto,
 				CarBrandModel.class);
 		brandToUpdate.setId(id);
+		brandToUpdate.setLogo(brandRepository.findLogoById(id));
 
 		return MapperUtils.convert(brandRepository.save(brandToUpdate),
 				CarBrandResponseDTO.class);

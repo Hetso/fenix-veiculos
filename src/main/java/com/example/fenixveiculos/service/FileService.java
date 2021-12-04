@@ -184,7 +184,8 @@ public class FileService {
 	}
 
 	public boolean isImageValid(MultipartFile file) {
-		return file != null && file.getContentType().startsWith("image/");
+		return file != null && !file.isEmpty()
+				&& file.getContentType().startsWith("image/");
 	}
 
 }

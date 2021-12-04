@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -116,7 +115,7 @@ public class CarController {
 	@Operation(summary = "Upload car images and cover image")
 	public ResponseEntity<CarImageUploadResponseDTO> uploadCarImages(
 			@PathVariable("id") Long id,
-			@RequestParam(value = "coverImage") MultipartFile coverImage,
+			@RequestParam(value = "coverImage", required = false) MultipartFile coverImage,
 			@RequestParam(value = "images", required = false) MultipartFile[] images) {
 
 		if (carService.findCarById(id) == null) {
@@ -124,7 +123,7 @@ public class CarController {
 					"Invalid car id");
 		}
 
-		String imageName = coverImage.getOriginalFilename();
+		String imageName = null;
 		List<String> imagesNames = new ArrayList<String>();
 
 		final String CAR_PATH_SUFIX = "/cars";
@@ -132,7 +131,13 @@ public class CarController {
 		boolean canUpload = true;
 		boolean hasImages = false;
 
-		if (images != null && images.length > 0
+		if (coverImage != null && !coverImage.isEmpty()) {
+			canUpload = fileService.isImageValid(coverImage);
+			imageName = coverImage.getOriginalFilename();
+		}
+
+		if (canUpload
+				&& images != null && images.length > 0
 				&& images[0].getOriginalFilename() != null
 				&& !images[0].getOriginalFilename().isBlank()) {
 
@@ -140,19 +145,22 @@ public class CarController {
 			hasImages = true;
 		}
 
-		// Impede que faça upload do coverImage e depois dê erro nas images
+		// Impede que faça upload do coverImage e depois dê erro nas images caso
+		// tenha ambos
 		if (canUpload) {
 
 			// update car cover image
+			if (coverImage != null && !coverImage.isEmpty()) {
+				String actualCoverImage = carService.getActualCarCoverImage(id);
+				if (actualCoverImage == null || !actualCoverImage
+						.equals(coverImage.getOriginalFilename())) {
 
-			String actualCoverImage = carService.getActualCarCoverImage(id);
-			if (actualCoverImage == null || !actualCoverImage
-					.equals(coverImage.getOriginalFilename())) {
-
-				fileService.deleteImage(coverImage.getOriginalFilename(),
-						CAR_PATH_SUFIX);
-				imageName = fileService.uploadImage(coverImage, CAR_PATH_SUFIX);
-				carService.updateCarCoverImage(imageName, id);
+					fileService.deleteImage(coverImage.getOriginalFilename(),
+							CAR_PATH_SUFIX);
+					imageName = fileService.uploadImage(coverImage,
+							CAR_PATH_SUFIX);
+					carService.updateCarCoverImage(imageName, id);
+				}
 			}
 
 			// insert new car images
@@ -309,9 +317,9 @@ public class CarController {
 
 			return ResponseEntity.ok()
 					.contentType(MediaType.parseMediaType(contentType))
-					.header(HttpHeaders.CONTENT_DISPOSITION,
-							"attachment; filename=\"" + image.getFilename()
-									+ "\"")
+//					.header(HttpHeaders.CONTENT_DISPOSITION,
+//							"attachment; filename=\"" + image.getFilename()
+//									+ "\"")
 					.body(image);
 		}
 

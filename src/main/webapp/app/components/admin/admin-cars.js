@@ -29,19 +29,43 @@
                 templateUrl: 'app/components/admin/dialog/edit-car-dialog.html',
                 controller: function () {
                     const ctrl = this;
+
+                    ctrl.getImageUrl = $scope.getImageUrl;
                     
                     ctrl.editingCar = car ? angular.copy(car) : {};
                     ctrl.brands = $scope.brands;
+                    
+                    ctrl.editingCar.coverImageFile = null;
+                    ctrl.editingCar.imagesFiles = [];
+
+                    ctrl.coverImageUpdate = function(file) {
+                        ctrl.editingCar.coverImageFile = file;
+                    }
+
+                    ctrl.imagesUpdate = function(files) {
+                        for(var key in files) {
+                            if(typeof files[key] === 'object') {
+                                ctrl.editingCar.imagesFiles.push(files[key]);
+                            }
+                        }
+                    }
+
+                    ctrl.deleteImage = function(filename) {
+                        return CarService.removeCarImage(ctrl.editingCar.id, filename);
+                    }
 
                     ctrl.saveCar = saveCar;
 
                     ctrl.close = function () {
+                        reloadCars();
                         $mdDialog.hide();
                     };
                 },
                 controllerAs: 'editCarCtrl'
             });
         }
+
+        $scope.getImageUrl = CarService.getImageUrl;
 
         $scope.removeCar = function(car) {
             $mdDialog.show({
@@ -76,13 +100,22 @@
         function saveCar(car) {
             car.brandId = car.brand.id
 
+            var isUploadImage = car.coverImageFile || (car.imagesFiles && car.imagesFiles.length);
+
             CarService.saveCar(car)
             .then(function(res) {
-
+                if(isUploadImage) {
+                    CarService.uploadCarImages({coverImage: car.coverImageFile, images: car.imagesFiles, carId: res.id})
+                    .finally(function() {
+                        reloadCars();
+                    });
+                }
             })
             .finally(function() {
                 $mdDialog.hide();
-                reloadCars();
+                if(!isUploadImage) {
+                    reloadCars();
+                }
             });
         }
 

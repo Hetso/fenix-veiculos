@@ -1,0 +1,26 @@
+<div class="image-selector-content">
+    <div ng-if="label" class="image-selector-content-label">{{label}}</div>
+
+    <div class="images-list">
+        <div class="image-card">
+            <label for="{{!multiple ? 'image-selector-single' : 'image-selector-multiple'}}">
+                <img ng-src="{{multiple ? defaultImage : single.currentImage}}" alt="IMG">
+                <img class="add-icon" ng-show="multiple || single.currentImage === defaultImage" src="/img/add-photo.jpg">
+                <span>{{multiple ? 'Adicionar imagens' : 'Selecionar imagem'}}</span>
+                <div class="image-overlay"></div>
+            </label>
+            <input accept="image/*" ng-if="!multiple" type="file" name="image-selector" id="image-selector-single" onchange="angular.element(this).scope().singleFileChanged(this)">
+            <input accept="image/*" ng-if="multiple" multiple="true" type="file" name="image-selector" id="image-selector-multiple" onchange="angular.element(this).scope().multipleFileChanged(this)">
+        </div>
+        <div class="image-viewer" ng-if="multiple" ng-repeat="image in multipleImages.images track by image.url">
+            <div class="image-card">
+                <md-button class="md-icon-button image-button image-remove" ng-click="removeImage(image, $index)">
+                    <md-tooltip>Remover imagem</md-tooltip>
+                    <md-icon md-svg-icon="delete"></md-icon>
+                </md-button>
+                <img ng-src="{{image.url}}" alt="IMG">
+                <div class="image-overlay"></div>
+            </div>
+        </div>
+    </div>
+</div>

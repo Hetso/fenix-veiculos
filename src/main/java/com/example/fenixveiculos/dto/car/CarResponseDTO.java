@@ -18,7 +18,7 @@ import lombok.experimental.SuperBuilder;
 public class CarResponseDTO extends CarDTO {
 
 	private final Long id;
-	private final String imageCover;
+	private final String coverImage;
 	private final Set<CarImageModel> images;
 
 }

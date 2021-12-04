@@ -3,6 +3,8 @@
         <md-dialog-content>
             <div class="md-dialog-content">
                 <h2 class="md-title">{{editCarCtrl.editingCar.id ? 'Editar Carro' : 'Adicionar Carro'}}</h2>
+                <fv-image-selector label="Imagem capa" get-image-url="editCarCtrl.getImageUrl" current-images="editCarCtrl.editingCar.coverImage" 
+                    update-callback="editCarCtrl.coverImageUpdate"></fv-image-selector>
                 <md-input-container class="md-block">
                     <label>Marca</label>
                     <md-select ng-model="editCarCtrl.editingCar.brand" placeholder="Selecione uma marca">
@@ -32,6 +34,8 @@
                     <textarea name="description" ng-model="editCarCtrl.editingCar.description" autocomplete="off"
                         rows="5"></textarea>
                 </md-input-container>
+                <fv-image-selector label="Imagens" multiple get-image-url="editCarCtrl.getImageUrl" current-images="editCarCtrl.editingCar.images" 
+                    update-callback="editCarCtrl.imagesUpdate" delete-callback="editCarCtrl.deleteImage"></fv-image-selector>
             </div>
         </md-dialog-content>
         <md-dialog-actions>

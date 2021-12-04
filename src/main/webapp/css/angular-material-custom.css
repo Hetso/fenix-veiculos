@@ -192,3 +192,7 @@ md-tabs.md-default-theme md-ink-bar, md-tabs md-ink-bar {
     color: rgb(243, 243, 243);
 }
 
+md-input-container md-select {
+    margin-bottom: 25px;
+}
+

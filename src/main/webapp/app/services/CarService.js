@@ -38,7 +38,11 @@
                 const fd = new FormData();
 
                 fd.append('coverImage', data.coverImage)
-                fd.append('images', data.images)
+                if(data.images && data.images.length) {
+                    data.images.forEach(image => {
+                        fd.append('images', image)
+                    })
+                }
 
                 return $http.post(prefixV1 + '/' + data.carId + '/images', fd, {
                     transformRequest: angular.identity,
@@ -91,8 +95,8 @@
             /**
              * Get brand or car image
              */
-            getImage: function(fileName) {
-                return $http.get(prefixV1 + '/images/' + fileName).then(extractData)
+            getImageUrl: function(fileName) {
+                return prefixV1 + '/images/' + fileName;
             }
         };
     });

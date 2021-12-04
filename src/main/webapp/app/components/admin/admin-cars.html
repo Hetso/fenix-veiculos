@@ -4,45 +4,48 @@
             <button type="button" class="btn-main" ng-click="editCar()">
                 Adicionar carro
             </button>
-            <fv-input label="Pesquisar" type="text" model="currentCarSearch" autofocus="true" 
-                icon="search" icon-tooltip="Realizar pesquisa" icon-callback="reloadCars" enter-callback="reloadCars">
+            <fv-input label="Pesquisar" type="text" model="currentCarSearch" autofocus="true" icon="search"
+                icon-tooltip="Realizar pesquisa" icon-callback="reloadCars" enter-callback="reloadCars">
             </fv-input>
             <md-divider></md-divider>
-            <table class="fv-table" style="min-width: 600px; max-width: 650px;">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Marca</th>
-                        <th>Modelo</th>
-                        <th>Ano</th>
-                        <th>Cor</th>
-                        <th>Preço</th>
-                        <th>Descrição</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="car in cars">
-                        <td ng-bind="::car.id"></td>
-                        <td ng-bind="::car.brand.name"></td>
-                        <td ng-bind="::car.model"></td>
-                        <td ng-bind="::car.year"></td>
-                        <td ng-bind="::car.color"></td>
-                        <td ng-bind="::car.price"></td>
-                        <td ng-bind="::car.description"></td>
-                        <td class="right">
-                            <md-button class="md-icon-button" ng-click="editCar(car)">
-                                <md-tooltip>Editar</md-tooltip>
-                                <md-icon md-svg-icon="edit"></md-icon>
-                            </md-button>
-                            <md-button class="md-icon-button" ng-click="removeCar(car)">
-                                <md-tooltip>Excluir</md-tooltip>
-                                <md-icon md-svg-icon="delete"></md-icon>
-                            </md-button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="grid-table">
+                <div class="grid-table-head">
+                    <span></span>
+                    <span>Marca</span>
+                    <span>Modelo</span>
+                    <span>Ano</span>
+                    <span>Cor</span>
+                    <span>Preço</span>
+                    <span>Descrição</span>
+                    <span></span>
+                </div>
+                <div class="grid-table-body">
+                    <div ng-repeat="car in cars track by car.id" class="car-row">
+                        <span class="car-image">
+                            <img ng-src="{{getImageUrl(car.coverImage)}}" onerror="this.src='img/no-image.png'"
+                                alt="CAR IMAGE">
+                        </span>
+                        <span ng-bind="::car.brand.name"></span>
+                        <span ng-bind="::car.model"></span>
+                        <span ng-bind="::car.year"></span>
+                        <span ng-bind="::car.color"></span>
+                        <span ng-bind="::car.price"></span>
+                        <span ng-bind="::car.description"></span>
+                        <span>
+                            <div class="right">
+                                <md-button class="md-icon-button" ng-click="editCar(car)">
+                                    <md-tooltip>Editar</md-tooltip>
+                                    <md-icon md-svg-icon="edit"></md-icon>
+                                </md-button>
+                                <md-button class="md-icon-button" ng-click="removeCar(car)">
+                                    <md-tooltip>Excluir</md-tooltip>
+                                    <md-icon md-svg-icon="delete"></md-icon>
+                                </md-button>
+                            </div>
+                        </span>
+                    </div>
+                </div>
+            </div>
         </md-card-content>
     </md-card>
 </div>

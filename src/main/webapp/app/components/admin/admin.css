@@ -1,0 +1,16 @@
+fv-admin .cars-content .car-image img {
+    width: 150px;
+    height: 150px;
+}
+
+
+
+fv-admin .cars-content .grid-table-body > *,
+fv-admin .cars-content .grid-table-head {
+    grid-template-columns: 150px 150px 150px 80px 110px 100px 150px 125px;
+    align-items: center;
+}
+
+fv-admin .cars-content .grid-table {
+    grid-template-rows: 60px auto;
+}

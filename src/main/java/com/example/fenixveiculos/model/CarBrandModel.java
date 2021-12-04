@@ -40,4 +40,7 @@ public class CarBrandModel {
 	@OneToMany(mappedBy = "brand")
 	private Set<CarModel> cars;
 
+	@Column(name = "logo")
+	private String logo;
+
 }

@@ -1,0 +1,95 @@
+.image-selector-content {
+    margin-bottom: 50px;
+}
+
+.image-selector-content .image-selector-content-label {
+    color: #7b7b7b;
+}
+
+.image-selector-content .image-card {
+    margin-top: 5px;
+}
+
+.image-selector-content .image-card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--default-border);
+    width: 200px;
+    height: 200px;
+    justify-content: center;
+    position: relative;
+}
+
+.image-selector-content .image-card input {
+    display: none;
+}
+
+.image-selector-content .image-card label {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.image-selector-content .image-card img {
+    position: absolute;
+    width: inherit;
+    height: inherit;
+    z-index: 9;
+}
+
+.image-selector-content .image-card .image-overlay {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: 10;
+    transition: 0.5s linear;
+    opacity: 0;
+    background-color: #000000ad;
+}
+
+.image-selector-content .image-card label span {
+    z-index: 11;
+    opacity: 0;
+    transition: 0.5s;
+    color: white;
+    font-weight: 600;
+}
+
+.image-selector-content .image-card label:hover span,
+.image-selector-content .image-card:hover .image-overlay {
+    opacity: 1;
+}
+
+.image-selector-content .images-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+}
+
+.image-selector-content .image-card .add-icon {
+    height: 50%;
+    width: 50%;
+}
+
+.image-selector-content .image-viewer .md-icon-button.image-remove {
+    z-index: 12;
+    position: absolute;
+    top: 6px;
+    right: 0px;
+}
+
+.image-selector-content .image-viewer .image-button {
+    opacity: 0;
+    transition: 0.5s linear;
+}
+
+.image-selector-content .image-viewer .image-button svg {
+    fill: white;
+}
+
+.image-selector-content .image-viewer:hover .image-button {
+    opacity: 1;
+}

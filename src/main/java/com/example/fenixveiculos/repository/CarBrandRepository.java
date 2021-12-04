@@ -23,4 +23,7 @@ public interface CarBrandRepository extends JpaRepository<CarBrandModel, Long>,
 
 	@Query(value = "SELECT * from car_brand where name LIKE %:search%", nativeQuery = true)
 	public List<CarBrandModel> searchBrands(@Param("search") String search);
+
+	@Query(value = "SELECT logo FROM car_brand where id = :id", nativeQuery = true)
+	public String findLogoById(@Param("id") long id);
 }
