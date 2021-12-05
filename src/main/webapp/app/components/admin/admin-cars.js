@@ -65,7 +65,9 @@
             });
         }
 
-        $scope.getImageUrl = CarService.getImageUrl;
+        $scope.getImageUrl = function(filename) {
+            return filename ? CarService.getImageUrl(filename) : 'img/no-image.png'
+        };
 
         $scope.removeCar = function(car) {
             $mdDialog.show({
