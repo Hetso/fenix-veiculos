@@ -15,4 +15,5 @@ public class CarBrandResponseDTO extends CarBrandDTO {
 
 	private final Long id;
 	private final boolean isDisabled;
+	private String logo;
 }

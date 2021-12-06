@@ -3,6 +3,8 @@
         <md-dialog-content>
             <div class="md-dialog-content">
                 <h2 class="md-title">{{ctrl.editingBrand.id ? 'Editar Marca' : 'Adicionar Marca'}}</h2>
+                <fv-image-selector label="Logo" get-image-url="ctrl.getImageUrl" current-images="ctrl.editingBrand.logo" 
+                    update-callback="ctrl.logoImageUpdate"></fv-image-selector>
                 <md-input-container class="md-block">
                     <label>Nome</label>
                     <input name="name" type="text" ng-model="ctrl.editingBrand.name" autocomplete="off" required md-autofocus>

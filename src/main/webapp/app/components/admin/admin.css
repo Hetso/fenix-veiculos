@@ -1,16 +1,28 @@
-fv-admin .cars-content .car-image img {
+fv-admin .cars-content .car-image img,
+fv-admin .brands-content .brand-image img {
     width: 150px;
     height: 150px;
 }
 
-
-
 fv-admin .cars-content .grid-table-body > *,
 fv-admin .cars-content .grid-table-head {
-    grid-template-columns: 150px 150px 150px 80px 110px 100px 150px 125px;
+    grid-template-columns: 150px 150px 150px 80px 110px 100px 150px auto;
     align-items: center;
 }
 
-fv-admin .cars-content .grid-table {
+fv-admin .grid-table {
     grid-template-rows: 60px auto;
+    min-width: 50vw;
+    max-width: 80vw;
+    overflow-x: auto;
+}
+
+fv-admin .brands-content .grid-table-body > *,
+fv-admin .brands-content .grid-table-head {
+    grid-template-columns: 150px 150px auto;
+    align-items: center;
+}
+
+fv-admin .grid-table-body {
+    max-height: 45vh;
 }

@@ -245,6 +245,11 @@ public class CarService {
 
 	@Transactional
 	public void updateBrandLogo(long brandId, String logo) {
+		String actualLogo = brandRepository.findLogoById(brandId);
 		brandRepository.updateLogo(logo, brandId);
+
+		if (actualLogo != null && !actualLogo.isEmpty()) {
+			fileService.deleteImage(actualLogo, FileUtils.CAR_PATH);
+		}
 	}
 }

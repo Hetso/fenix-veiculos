@@ -85,7 +85,7 @@
 
                 fd.append('logo', data.logo)
 
-                return $http.post(prefixV1 + '/' + data.brandId + '/images', fd, {
+                return $http.post(prefixV1 + '/brands/' + data.brandId + '/images', fd, {
                     transformRequest: angular.identity,
                     headers: {
                         'Content-type': undefined

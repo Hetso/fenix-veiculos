@@ -18,7 +18,12 @@
             <md-divider></md-divider>
             <div class="grid-table">
                 <div class="grid-table-head">
-                    <span></span>
+                    <span ng-init="displayImage = true">
+                        <div class="center">
+                            <md-tooltip>{{displayImage ? 'Ocultar imagens' : 'Exibir imagens'}}</md-tooltip>
+                            <md-switch ng-model="displayImage"></md-switch>
+                        </div>
+                    </span>
                     <span>Marca</span>
                     <span>Modelo</span>
                     <span>Ano</span>
@@ -30,7 +35,7 @@
                 <div class="grid-table-body">
                     <div ng-repeat="car in cars track by car.id" class="car-row">
                         <span class="car-image">
-                            <img ng-src="{{getImageUrl(car.coverImage)}}" onerror="this.src='img/no-image.png'"
+                            <img ng-show="displayImage" ng-src="{{getImageUrl(car.coverImage)}}" onerror="this.src='img/no-image.png'"
                                 alt="CAR IMAGE">
                         </span>
                         <span ng-bind="car.brand.name"></span>

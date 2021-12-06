@@ -22,6 +22,16 @@
 
         $scope.brandStatus = 'ENABLED'
 
+        $scope.switch = {
+            brandStatus: function(value) {
+                return  $scope.brandStatus === 'ENABLED' ? true : false;
+            }
+        }
+
+        $scope.test = function() {
+            console.log('oi')
+        }
+
         $scope.editBrand = function (brand) {
             $mdDialog.show({
                 templateUrl: 'app/components/admin/dialog/edit-brand-dialog.html',
@@ -30,6 +40,12 @@
                     ctrl.editingBrand = brand ? angular.copy(brand) : {};
 
                     ctrl.saveBrand = saveBrand;
+
+                    ctrl.getImageUrl = $scope.getImageUrl;
+
+                    ctrl.logoImageUpdate = function(file) {
+                        ctrl.editingBrand.logoFile = file;
+                    }
 
                     ctrl.close = function () {
                         $mdDialog.hide();
@@ -62,6 +78,10 @@
             $scope.brandStatus = status;
             reloadBrands();
         }
+
+        $scope.getImageUrl = function(filename) {
+            return filename ? CarService.getImageUrl(filename) : 'img/no-image.png'
+        };
 
         $scope.changeBrandStatus = function(brand) {
             brand.viewDisabled = !brand.disabled;
@@ -116,13 +136,22 @@
         $scope.reloadBrands = reloadBrands
 
         function saveBrand(brand) {
+            const isUpdatingLogo = !!brand.logoFile
+
             CarService.saveBrand(brand)
                 .then(function (res) {
-
+                    if(isUpdatingLogo) {
+                        CarService.uploadBrandLogo({logo: brand.logoFile, brandId: res.id}).finally(function() {
+                            reloadBrands();
+                        })
+                    }
                 })
                 .finally(function () {
                     $mdDialog.hide();
-                    reloadBrands();
+
+                    if(!isUpdatingLogo) {
+                        reloadBrands();
+                    }
                 });
         }
 

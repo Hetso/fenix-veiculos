@@ -119,11 +119,19 @@ td.vcenter {
     vertical-align: middle;
 }
 
-table.fv-table .right {
+table.fv-table .right,
+.grid-table .right {
     text-align: right;
     display: flex;
     align-items: center;
     justify-content: flex-end;
+}
+
+.grid-table .center {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .error-box {
@@ -150,11 +158,15 @@ table.fv-table .right {
     overflow-x: hidden;
     height: 100%;
     max-height: 50vh;
+    width: 100%;
+    min-width: fit-content;
 }
 
 .grid-table-head {
     display: grid;
     grid-gap: 15px;
+    font-weight: 600;
+    border-bottom: 1px solid rgb(151, 151, 151);
 }
 
 .grid-table-body > * {

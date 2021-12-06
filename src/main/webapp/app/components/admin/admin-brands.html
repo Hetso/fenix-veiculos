@@ -16,35 +16,43 @@
                 icon="search" icon-tooltip="Realizar pesquisa" icon-callback="reloadBrands" enter-callback="reloadBrands">
             </fv-input>
             <md-divider></md-divider>
-            <table class="fv-table" style="min-width: 600px; max-width: 650px;">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nome</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="brand in brands" ng-init="brand.viewDisabled = !brand.disabled">
-                        <td ng-bind="::brand.id"></td>
-                        <td ng-bind="::brand.name"></td>
-                        <td class="right">
-                            <md-button class="md-icon-button" ng-click="editBrand(brand)">
-                                <md-tooltip>Editar</md-tooltip>
-                                <md-icon md-svg-icon="edit"></md-icon>
-                            </md-button>
-                            <div>
-                                <md-tooltip>{{brand.disabled ? 'Ativar' : 'Desativar'}}</md-tooltip>
-                                <md-switch ng-model="brand.viewDisabled" ng-change="changeBrandStatus(brand)"></md-switch>
+            <div class="grid-table">
+                <div class="grid-table-head">
+                    <span ng-init="displayImage = true">
+                        <div class="center">
+                            <md-tooltip>{{displayImage ? 'Ocultar imagens' : 'Exibir imagens'}}</md-tooltip>
+                            <md-switch ng-model="displayImage"></md-switch>
+                        </div>
+                    </span>
+                    <span>Nome</span>
+                    <span></span>
+                </div>
+                <div class="grid-table-body">
+                    <div ng-repeat="brand in brands track by brand.id" ng-init="brand.viewDisabled = !brand.disabled" class="brand-row">
+                        <span class="brand-image">
+                            <img ng-show="displayImage" ng-src="{{getImageUrl(brand.logo)}}" onerror="this.src='img/no-image.png'"
+                                alt="BRAND IMAGE">
+                        </span>
+                        <span ng-bind="brand.name"></span>
+                        <span>
+                            <div class="right">
+                                <md-button class="md-icon-button" ng-click="editBrand(brand)">
+                                    <md-tooltip>Editar</md-tooltip>
+                                    <md-icon md-svg-icon="edit"></md-icon>
+                                </md-button>
+                                <div>
+                                    <md-tooltip>{{brand.disabled ? 'Ativar' : 'Desativar'}}</md-tooltip>
+                                    <md-switch  ng-model="switch.brandStatus" ng-model-options="{ getterSetter: true }" ng-change="changeBrandStatus(brand)"></md-switch>
+                                </div>
+                                <md-button ng-if="brand.disabled" class="md-icon-button" ng-click="removeBrand(brand)">
+                                    <md-tooltip>Excluir</md-tooltip>
+                                    <md-icon md-svg-icon="delete"></md-icon>
+                                </md-button>
                             </div>
-                            <md-button ng-if="brand.disabled" class="md-icon-button" ng-click="removeBrand(brand)">
-                                <md-tooltip>Excluir</md-tooltip>
-                                <md-icon md-svg-icon="delete"></md-icon>
-                            </md-button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                        </span>
+                    </div>
+                </div>
+            </div>
         </md-card-content>
     </md-card>
 </div>
