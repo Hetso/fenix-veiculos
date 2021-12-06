@@ -10,6 +10,8 @@
     --btn-width: 150px;
     --btn-height: 40px;
     --nav-font-color: #fff;
+    --success: rgb(54 189 45);
+    --success-opacity: rgb(76 179 42 / 50%);
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
@@ -121,6 +123,7 @@ table.fv-table .right {
     text-align: right;
     display: flex;
     align-items: center;
+    justify-content: flex-end;
 }
 
 .error-box {

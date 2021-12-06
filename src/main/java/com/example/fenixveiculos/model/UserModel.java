@@ -47,7 +47,7 @@ public class UserModel implements UserDetails {
 	@Column(name = "lastname", nullable = false)
 	private String lastname;
 
-	@Column(name = "password", nullable = false)
+	@Column(name = "password", nullable = false, updatable = false)
 	private String password;
 
 	@Column(name = "gender", nullable = false)

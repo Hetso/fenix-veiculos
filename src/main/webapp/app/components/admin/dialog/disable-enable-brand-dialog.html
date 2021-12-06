@@ -1,0 +1,23 @@
+<md-dialog style="width: 30%;">
+    <form name="ctrl.changeBrandStatusform" data-ng-submit="ctrl.changeBrandStatus(ctrl.currentBrand)">
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <h3 class="md-padding" ng-if="ctrl.currentBrand.disabled">
+                    Deseja ativar esta marca? Todos os carros associados a esta marca serão exibidos novamente em modo público.
+                </h3>
+                <h3 class="md-padding" ng-if="!ctrl.currentBrand.disabled">
+                    Deseja desativar esta marca? Todos os carros associados a esta marca serão ocultados em modo público.
+                </h3>
+                <div class="md-padding">
+                    <span>
+                        {{ctrl.currentBrand.name}} 
+                    </span>
+                </div>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions>
+            <md-button type="button" ng-click="ctrl.close()"><span>Cancelar</span></md-button>
+            <md-button type="submit" ><span>Confirmar</span></md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

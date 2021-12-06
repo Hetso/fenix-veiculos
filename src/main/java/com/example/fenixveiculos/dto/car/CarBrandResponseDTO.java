@@ -14,5 +14,5 @@ import lombok.experimental.SuperBuilder;
 public class CarBrandResponseDTO extends CarBrandDTO {
 
 	private final Long id;
-
+	private final boolean isDisabled;
 }

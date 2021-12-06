@@ -57,7 +57,7 @@ public class CarModel {
 	@Column(name = "description")
 	private String description;
 
-	@Column(name = "cover_image")
+	@Column(name = "cover_image", updatable = false)
 	private String coverImage;
 
 	@JsonManagedReference

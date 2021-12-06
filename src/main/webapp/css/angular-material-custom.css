@@ -196,3 +196,24 @@ md-input-container md-select {
     margin-bottom: 25px;
 }
 
+md-card md-tabs {
+    border: none;
+    margin-bottom: 25px;
+}
+
+md-switch,
+md-switch * {
+    cursor: pointer;
+}
+
+md-switch.md-default-theme.md-checked .md-thumb, md-switch.md-checked .md-thumb {
+   background-color: var(--success) !important;
+   color: var(--success) !important;
+}
+
+md-switch.md-default-theme.md-checked .md-bar, md-switch.md-checked .md-bar,
+md-switch.md-default-theme.md-checked .md-ink-ripple, md-switch.md-checked .md-ink-ripple {
+    background-color: var(--success-opacity) !important;
+    color: var(--success-opacity) !important;
+}
+

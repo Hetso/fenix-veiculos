@@ -40,7 +40,10 @@ public class CarBrandModel {
 	@OneToMany(mappedBy = "brand")
 	private Set<CarModel> cars;
 
-	@Column(name = "logo")
+	@Column(name = "logo", updatable = false)
 	private String logo;
+
+	@Column(name = "is_disabled", columnDefinition = "TINYINT(1)", nullable = false, updatable = false)
+	private boolean isDisabled;
 
 }

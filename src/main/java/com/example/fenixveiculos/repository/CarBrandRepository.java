@@ -21,9 +21,16 @@ public interface CarBrandRepository extends JpaRepository<CarBrandModel, Long>,
 	public int updateLogo(@Param("logo") String logo,
 			@Param("brandId") long brandId);
 
-	@Query(value = "SELECT * from car_brand where name LIKE %:search%", nativeQuery = true)
-	public List<CarBrandModel> searchBrands(@Param("search") String search);
+	@Query(value = "SELECT * FORM car_brand WHERE name LIKE %:search% AND is_disabled = :disabled", nativeQuery = true)
+	public List<CarBrandModel> searchBrands(@Param("search") String search,
+			@Param("disabled") boolean disabled);
 
 	@Query(value = "SELECT logo FROM car_brand where id = :id", nativeQuery = true)
 	public String findLogoById(@Param("id") long id);
+
+	@Modifying
+	@Query(value = "UPDATE car_brand SET is_disabled = :disabled WHERE id = :id", nativeQuery = true)
+	public int updateBrandDisabledStatus(@Param("id") long id,
+			@Param("disabled") boolean disabled);
+
 }

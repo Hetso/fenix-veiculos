@@ -24,8 +24,7 @@ public class AuthenticationService implements UserDetailsService {
 
 	public UserModel getCurrentUser() {
 
-		if (SecurityContextHolder.getContext()
-				.getAuthentication() instanceof AnonymousAuthenticationToken) {
+		if (!isAuthenticated()) {
 			return null;
 		}
 
@@ -45,6 +44,11 @@ public class AuthenticationService implements UserDetailsService {
 		}
 
 		throw new UsernameNotFoundException("User not found");
+	}
+
+	public static boolean isAuthenticated() {
+		return !(SecurityContextHolder.getContext()
+				.getAuthentication() instanceof AnonymousAuthenticationToken);
 	}
 
 }

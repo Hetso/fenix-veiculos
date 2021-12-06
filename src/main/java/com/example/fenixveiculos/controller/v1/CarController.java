@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.example.fenixveiculos.dto.car.CarBrandFullResponseDTO;
 import com.example.fenixveiculos.dto.car.CarBrandRequestDTO;
 import com.example.fenixveiculos.dto.car.CarBrandResponseDTO;
 import com.example.fenixveiculos.dto.car.CarFullResponseDTO;
@@ -32,8 +34,11 @@ import com.example.fenixveiculos.dto.car.CarImageRequestDTO;
 import com.example.fenixveiculos.dto.car.CarImageUploadResponseDTO;
 import com.example.fenixveiculos.dto.car.CarRequestDTO;
 import com.example.fenixveiculos.dto.file.FileUploadResponseDTO;
+import com.example.fenixveiculos.model.CarBrandStatus;
+import com.example.fenixveiculos.service.AuthenticationService;
 import com.example.fenixveiculos.service.CarService;
 import com.example.fenixveiculos.service.FileService;
+import com.example.fenixveiculos.utils.FileUtils;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -53,13 +58,17 @@ public class CarController {
 	@GetMapping
 	@Operation(summary = "Get all cars (with simple search filter)")
 	public ResponseEntity<List<CarFullResponseDTO>> getAllCars(
-			@RequestParam(name = "simpleSearch", required = false) String simpleSearch) {
+			@RequestParam(name = "simpleSearch", required = false) String simpleSearch,
+			@RequestParam("brandStatus") CarBrandStatus brandStatus) {
+
+		verifyBrandStatusPermission(brandStatus);
 
 		if (simpleSearch != null && !simpleSearch.isEmpty()) {
-			return ResponseEntity.ok(carService.findAllCars(simpleSearch));
+			return ResponseEntity
+					.ok(carService.findAllCars(brandStatus, simpleSearch));
 		}
 
-		return ResponseEntity.ok(carService.findAllCars());
+		return ResponseEntity.ok(carService.findAllCars(brandStatus));
 	}
 
 	@GetMapping(value = "/{id:[0-9]+}")
@@ -69,6 +78,10 @@ public class CarController {
 		CarFullResponseDTO car = carService.findCarById(id);
 
 		if (car != null) {
+			if (car.getBrand().isDisabled()) {
+				verifyBrandStatusPermission(CarBrandStatus.DISABLED);
+			}
+
 			return ResponseEntity.ok(car);
 		}
 
@@ -101,9 +114,7 @@ public class CarController {
 	@DeleteMapping(value = "/{id:[0-9]+}")
 	@Operation(summary = "Delete a car by id")
 	public ResponseEntity<String> deleteCar(@PathVariable("id") Long id) {
-
-		if (carService.findCarById(id) != null) {
-			carService.deleteCar(id);
+		if (carService.deleteCar(id)) {
 			return ResponseEntity.noContent().build();
 		}
 
@@ -125,8 +136,6 @@ public class CarController {
 
 		String imageName = null;
 		List<String> imagesNames = new ArrayList<String>();
-
-		final String CAR_PATH_SUFIX = "/cars";
 
 		boolean canUpload = true;
 		boolean hasImages = false;
@@ -156,9 +165,9 @@ public class CarController {
 						.equals(coverImage.getOriginalFilename())) {
 
 					fileService.deleteImage(coverImage.getOriginalFilename(),
-							CAR_PATH_SUFIX);
+							FileUtils.CAR_PATH);
 					imageName = fileService.uploadImage(coverImage,
-							CAR_PATH_SUFIX);
+							FileUtils.CAR_PATH);
 					carService.updateCarCoverImage(imageName, id);
 				}
 			}
@@ -171,7 +180,7 @@ public class CarController {
 							id)) {
 
 						String imgName = fileService.uploadImage(image,
-								CAR_PATH_SUFIX);
+								FileUtils.CAR_PATH);
 						imagesNames.add(imgName);
 
 						carService.saveCarImage(CarImageRequestDTO.builder()
@@ -199,7 +208,7 @@ public class CarController {
 			@PathVariable("fileName") String imagePath) {
 
 		if (carService.deleteCarImage(id, imagePath) > 0) {
-			fileService.deleteImage(imagePath, "/cars");
+			fileService.deleteImage(imagePath, FileUtils.CAR_PATH);
 		}
 
 		return ResponseEntity.noContent().build();
@@ -210,13 +219,16 @@ public class CarController {
 	@GetMapping(value = "/brands")
 	@Operation(summary = "Get all car brands")
 	public ResponseEntity<List<CarBrandResponseDTO>> getAllCarBrands(
-			@RequestParam(name = "search", required = false) String search) {
+			@RequestParam(name = "search", required = false) String search,
+			@Validated @NotNull @RequestParam("status") CarBrandStatus status) {
+
+		verifyBrandStatusPermission(status);
 
 		if (search != null && !search.isEmpty()) {
-			return ResponseEntity.ok(carService.findAllBrands(search));
+			return ResponseEntity.ok(carService.findAllBrands(status, search));
 		}
 
-		return ResponseEntity.ok(carService.findAllBrands());
+		return ResponseEntity.ok(carService.findAllBrands(status));
 	}
 
 	@GetMapping(value = "/brands/{id:[0-9]+}")
@@ -227,6 +239,10 @@ public class CarController {
 		CarBrandResponseDTO brand = carService.findBrandById(id);
 
 		if (brand != null) {
+			if (brand.isDisabled()) {
+				verifyBrandStatusPermission(CarBrandStatus.DISABLED);
+			}
+
 			return ResponseEntity.ok(brand);
 		}
 
@@ -266,8 +282,33 @@ public class CarController {
 	@Operation(summary = "Delete a car brand by id")
 	public ResponseEntity<String> deleteCarBrand(@PathVariable("id") Long id) {
 
-		if (carService.findBrandById(id) != null) {
-			carService.deleteBrand(id);
+		CarBrandFullResponseDTO brand = carService.findBrandById(id);
+
+		if (brand != null && !brand.isDisabled()) {
+			return ResponseEntity.badRequest().body("Brand is already enabled");
+		}
+
+		if (carService.deleteCarsInBrand(id) && carService.deleteBrand(id)) {
+			return ResponseEntity.noContent().build();
+		}
+
+		return ResponseEntity.badRequest().body("Invalid car brand ID");
+	}
+
+	@PutMapping(value = "/brands/{id:[0-9]+}/disable")
+	@Operation(summary = "Disable car brand by id")
+	public ResponseEntity<String> disableCarBrand(@PathVariable("id") Long id) {
+		if (carService.disableBrand(id)) {
+			return ResponseEntity.noContent().build();
+		}
+
+		return ResponseEntity.badRequest().body("Invalid car brand ID");
+	}
+
+	@PutMapping(value = "/brands/{id:[0-9]+}/enable")
+	@Operation(summary = "Enable car brand by id")
+	public ResponseEntity<String> enableCarBrand(@PathVariable("id") Long id) {
+		if (carService.enableBrand(id)) {
 			return ResponseEntity.noContent().build();
 		}
 
@@ -280,12 +321,18 @@ public class CarController {
 			@PathVariable("id") Long id,
 			@RequestParam(value = "logo") MultipartFile logo) {
 
+		if (logo == null || logo.isEmpty() || !fileService.isImageValid(logo)) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+					"Invalid logo, should be image");
+		}
+
 		if (carService.findBrandById(id) == null) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
 					"Invalid car brand id");
 		}
 
-		final String logoName = fileService.uploadImage(logo, "/cars");
+		final String logoName = fileService.uploadImage(logo,
+				FileUtils.CAR_PATH);
 		carService.updateBrandLogo(id, logoName);
 
 		return ResponseEntity
@@ -299,7 +346,8 @@ public class CarController {
 	public ResponseEntity<Resource> getImageFile(
 			@PathVariable("fileName") String fileName,
 			HttpServletRequest request) {
-		Resource image = fileService.getImageAsResource(fileName, "/cars");
+		Resource image = fileService.getImageAsResource(fileName,
+				FileUtils.CAR_PATH);
 
 		if (image != null) {
 			String contentType = null;
@@ -317,12 +365,16 @@ public class CarController {
 
 			return ResponseEntity.ok()
 					.contentType(MediaType.parseMediaType(contentType))
-//					.header(HttpHeaders.CONTENT_DISPOSITION,
-//							"attachment; filename=\"" + image.getFilename()
-//									+ "\"")
 					.body(image);
 		}
 
 		return ResponseEntity.notFound().build();
+	}
+
+	private void verifyBrandStatusPermission(CarBrandStatus status) {
+		if (status == CarBrandStatus.DISABLED
+				&& !AuthenticationService.isAuthenticated()) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+		}
 	}
 }

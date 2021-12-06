@@ -13,8 +13,8 @@
         return {
             // cars
 
-            findAllCars: function(simpleSearch){
-               return $http.get(prefixV1 + (simpleSearch ? '?simpleSearch='  + simpleSearch : '')).then(extractData)
+            findAllCars: function(status, simpleSearch){
+               return $http.get(prefixV1 + `?brandStatus=${status}` + (simpleSearch ? '&simpleSearch='  + simpleSearch : '')).then(extractData)
             },
             findCarById: function(id) {
                 return $http.get(prefixV1 + '/' + id).then(extractData)
@@ -57,8 +57,8 @@
 
             // brands
 
-            findAllBrands: function(simpleSearch) {
-                return $http.get(prefixV1 + '/brands' + (simpleSearch ? '?search=' + simpleSearch : '')).then(extractData)
+            findAllBrands: function(status, simpleSearch) {
+                return $http.get(prefixV1 + '/brands' + `?status=${status}` + (simpleSearch ? '&search=' + simpleSearch : '')).then(extractData)
             },
             findBrandById: function(id) {
                 return $http.get(prefixV1 + '/brands/' + id).then(extractData)
@@ -72,6 +72,9 @@
             },
             removeBrand: function(brand) {
                 return $http.delete(prefixV1 + '/brands/' + brand.id).then(extractData)
+            },
+            disableBrand: function(brand) {
+                return $http.put(prefixV1 + '/brands/disable/' + brand.id).then(extractData)
             },
             /**
              * 
@@ -89,7 +92,12 @@
                     }
                 }).then(extractData)
             },
-
+            disableBrand: function(brand) {
+                return $http.put(prefixV1 + '/brands/' + brand.id + '/disable').then(extractData);
+            },
+            enableBrand: function(brand) {
+                return $http.put(prefixV1 + '/brands/' + brand.id + '/enable').then(extractData);
+            },
             // all
 
             /**

@@ -22,6 +22,8 @@
             $scope.brands = brands;
         }
 
+        $scope.brandStatus = 'ENABLED';
+
         $scope.editCar = function(car) {
             reloadBrands();
 
@@ -97,6 +99,11 @@
             })
         }
 
+        $scope.setBrandViewStatus = function(status) {
+            $scope.brandStatus = status;
+            reloadCars();
+        }
+
         $scope.reloadCars = reloadCars
 
         function saveCar(car) {
@@ -122,15 +129,15 @@
         }
 
         function reloadCars() {
-            CarService.findAllCars($scope.currentCarSearch)
+            CarService.findAllCars($scope.brandStatus, $scope.currentCarSearch)
             .then(function(res) {
-                $scope.cars = res
+                $scope.cars = res;
             });
 
         }
 
         function reloadBrands() {
-            CarService.findAllBrands().then(res => {
+            CarService.findAllBrands('ENABLED').then(res => {
                 $scope.brands = res;
             })
         }

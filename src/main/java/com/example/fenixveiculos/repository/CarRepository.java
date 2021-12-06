@@ -18,8 +18,11 @@ public interface CarRepository extends JpaRepository<CarModel, Long>,
 	@Query(value = "SELECT * "
 			+ "FROM car AS c "
 			+ "INNER JOIN car_brand AS cb ON c.brand_id = cb.id "
-			+ "WHERE CONCAT(cb.name, ' ', c.model, ' ', c.color, ' ', c.year, ' ', c.description, ' ', c.price) LIKE %:simpleSearch%", nativeQuery = true)
-	List<CarModel> findAllBySearch(@Param("simpleSearch") String simpleSearch);
+			+ "WHERE CONCAT(cb.name, ' ', c.model, ' ', c.color, ' ', c.year, ' ', c.description, ' ', c.price) "
+			+ "LIKE %:simpleSearch% "
+			+ "AND cb.is_disabled = :isBrandDisabled", nativeQuery = true)
+	List<CarModel> findAllBySearch(@Param("simpleSearch") String simpleSearch,
+			@Param("isBrandDisabled") boolean isBrandDisabled);
 
 	@Modifying
 	@Query(value = "UPDATE car SET cover_image = :coverImage WHERE id = :carId", nativeQuery = true)

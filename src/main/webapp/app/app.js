@@ -29,14 +29,14 @@ module.config(['$stateProvider', '$translateProvider', '$urlRouterProvider', '$l
 
     const brandsResolver = {
         brands: function(CarService) {
-            return CarService.findAllBrands();
+            return CarService.findAllBrands('ENABLED');
         }
     }
 
     // RESOLVERS
     const carsResolver = {
         cars: function(CarService) {
-            return CarService.findAllCars();
+            return CarService.findAllCars('ENABLED');
         },
         brands: brandsResolver.brands
     }

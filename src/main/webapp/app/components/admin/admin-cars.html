@@ -1,6 +1,14 @@
 <div class='cars-content'>
     <md-card>
         <md-card-content>
+            <md-tabs md-center-tabs md-no-select-click>
+                <md-tab ng-click="setBrandViewStatus('ENABLED')" md-active="brandStatus === 'ENABLED'">
+                    <md-tab-label>Ativados</md-tab-label>
+                </md-tab>
+                <md-tab ng-click="setBrandViewStatus('DISABLED')" md-active="brandStatus === 'DISABLED'">
+                    <md-tab-label>Desativados</md-tab-label>
+                </md-tab>
+            </md-tabs>
             <button type="button" class="btn-main" ng-click="editCar()">
                 Adicionar carro
             </button>
@@ -25,12 +33,12 @@
                             <img ng-src="{{getImageUrl(car.coverImage)}}" onerror="this.src='img/no-image.png'"
                                 alt="CAR IMAGE">
                         </span>
-                        <span ng-bind="::car.brand.name"></span>
-                        <span ng-bind="::car.model"></span>
-                        <span ng-bind="::car.year"></span>
-                        <span ng-bind="::car.color"></span>
-                        <span ng-bind="::car.price"></span>
-                        <span ng-bind="::car.description"></span>
+                        <span ng-bind="car.brand.name"></span>
+                        <span ng-bind="car.model"></span>
+                        <span ng-bind="car.year"></span>
+                        <span ng-bind="car.color"></span>
+                        <span ng-bind="car.price"></span>
+                        <span ng-bind="car.description"></span>
                         <span>
                             <div class="right">
                                 <md-button class="md-icon-button" ng-click="editCar(car)">
