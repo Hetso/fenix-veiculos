@@ -2,15 +2,15 @@
     <md-card>
         <md-card-content>
             <md-tabs md-center-tabs md-no-select-click>
-                <md-tab ng-click="setBrandViewStatus('ENABLED')" md-active="brandStatus === 'ENABLED'">
-                    <md-tab-label>Ativados</md-tab-label>
+                <md-tab ng-click="::setBrandViewStatus('ENABLED')" md-active="::brandStatus === 'ENABLED'">
+                    <md-tab-label>{{::'Ativados'}}</md-tab-label>
                 </md-tab>
-                <md-tab ng-click="setBrandViewStatus('DISABLED')" md-active="brandStatus === 'DISABLED'">
-                    <md-tab-label>Desativados</md-tab-label>
+                <md-tab ng-click="::setBrandViewStatus('DISABLED')" md-active="::brandStatus === 'DISABLED'">
+                    <md-tab-label>{{::'Desativados'}}</md-tab-label>
                 </md-tab>
             </md-tabs>
-            <button type="button" class="btn-main" ng-click="editCar()">
-                Adicionar carro
+            <button type="button" class="btn-main" ng-click="::editCar()">
+                {{::'Adicionar carro'}}
             </button>
             <fv-input label="Pesquisar" type="text" model="currentCarSearch" autofocus="true" icon="search"
                 icon-tooltip="Realizar pesquisa" icon-callback="reloadCars" enter-callback="reloadCars">
@@ -24,34 +24,39 @@
                             <md-switch ng-model="displayImage"></md-switch>
                         </div>
                     </span>
-                    <span>Marca</span>
-                    <span>Modelo</span>
-                    <span>Ano</span>
-                    <span>Cor</span>
-                    <span>Preço</span>
-                    <span>Descrição</span>
+                    <span>{{::'Marca'}}</span>
+                    <span>{{::'Modelo'}}</span>
+                    <span>{{::'Ano'}}</span>
+                    <span>{{::'Cor'}}</span>
+                    <span>{{::'Preço'}}</span>
+                    <span>{{::'Descrição'}}</span>
                     <span></span>
                 </div>
                 <div class="grid-table-body">
-                    <div ng-repeat="car in cars track by car.id" class="car-row">
+                    <div class="spinner" ng-show="carsLoading">
+                        <img src="{{::'img/loading.gif'}}" alt="LOADING">
+                        <span>{{::'Carregando carros'}}</span>
+                    </div>
+                    <div class="grid-table-body-content" ng-show="!carsLoading"
+                        ng-repeat="car in cars" class="car-row">
                         <span class="car-image">
-                            <img ng-show="displayImage" ng-src="{{getImageUrl(car.coverImage)}}" onerror="this.src='img/no-image.png'"
-                                alt="CAR IMAGE">
+                            <img ng-show="displayImage" ng-src="{{::getImageUrl(car.coverImage)}}"
+                                onerror="this.src='img/no-image.png'" alt="CAR IMAGE">
                         </span>
-                        <span ng-bind="car.brand.name"></span>
-                        <span ng-bind="car.model"></span>
-                        <span ng-bind="car.year"></span>
-                        <span ng-bind="car.color"></span>
-                        <span ng-bind="car.price"></span>
-                        <span ng-bind="car.description"></span>
+                        <span ng-bind="::car.brand.name"></span>
+                        <span ng-bind="::car.model"></span>
+                        <span ng-bind="::car.year"></span>
+                        <span ng-bind="::car.color"></span>
+                        <span ng-bind="::car.price"></span>
+                        <span ng-bind="::car.description"></span>
                         <span>
                             <div class="right">
-                                <md-button class="md-icon-button" ng-click="editCar(car)">
-                                    <md-tooltip>Editar</md-tooltip>
+                                <md-button class="md-icon-button" ng-click="::editCar(car)">
+                                    <md-tooltip>{{::'Editar'}}</md-tooltip>
                                     <md-icon md-svg-icon="edit"></md-icon>
                                 </md-button>
-                                <md-button class="md-icon-button" ng-click="removeCar(car)">
-                                    <md-tooltip>Excluir</md-tooltip>
+                                <md-button class="md-icon-button" ng-click="::removeCar(car)">
+                                    <md-tooltip>{{::'Excluir'}}</md-tooltip>
                                     <md-icon md-svg-icon="delete"></md-icon>
                                 </md-button>
                             </div>

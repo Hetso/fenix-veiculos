@@ -18,12 +18,11 @@
         this.$onInit = function init(){
             const { cars, brands } = this;
 
-            $scope.cars = cars;
-            $scope.brands = brands;
+            reloadBrands(brands);
+            reloadCars(cars);
         }
 
         $scope.brandStatus = 'ENABLED';
-
         $scope.editCar = function(car) {
             reloadBrands();
 
@@ -128,15 +127,35 @@
             });
         }
 
-        function reloadCars() {
-            CarService.findAllCars($scope.brandStatus, $scope.currentCarSearch)
-            .then(function(res) {
-                $scope.cars = res;
-            });
+        function reloadCars(cars) {
+            $scope.carsLoading = true;
 
+            setTimeout(reload, 300)
+            
+            function reload() {
+                if(cars && cars.length) {
+                    $scope.cars = cars;
+                    $scope.carsLoading = false;
+                    $scope.$digest();
+                    return;
+                }
+
+                CarService.findAllCars($scope.brandStatus, $scope.currentCarSearch)
+                .then(function(res) {
+                    $scope.cars = res;
+                })
+                .finally(function() {
+                    $scope.carsLoading = false;
+                });
+            }
         }
 
-        function reloadBrands() {
+        function reloadBrands(brands) {
+            if(brands && brands.length) {
+                $scope.brands = brands;
+                return;
+            }
+
             CarService.findAllBrands('ENABLED').then(res => {
                 $scope.brands = res;
             })

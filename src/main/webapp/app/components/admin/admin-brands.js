@@ -17,7 +17,7 @@
         this.$onInit = function init() {
             const { brands } = this;
 
-            $scope.brands = brands;
+            reloadBrands(brands);
         }
 
         $scope.brandStatus = 'ENABLED'
@@ -26,10 +26,6 @@
             brandStatus: function(value) {
                 return  $scope.brandStatus === 'ENABLED' ? true : false;
             }
-        }
-
-        $scope.test = function() {
-            console.log('oi')
         }
 
         $scope.editBrand = function (brand) {
@@ -155,10 +151,27 @@
                 });
         }
 
-        function reloadBrands() {
-            CarService.findAllBrands($scope.brandStatus, $scope.currentBrandSearch).then(res => {
-                $scope.brands = res;
-            })
+        function reloadBrands(brands) {
+            $scope.brandsLoading = true;
+
+            setTimeout(reload, 300);
+            
+            function reload() {
+                if(brands && brands.length) {
+                    $scope.brands = brands;
+                    $scope.brandsLoading = false;
+                    $scope.$digest();
+                    return;
+                }
+
+                CarService.findAllBrands($scope.brandStatus, $scope.currentBrandSearch)
+                .then(res => {
+                    $scope.brands = res;
+                })
+                .finally(function() {
+                    $scope.brandsLoading = false;
+                })
+            }
         }
     }
 

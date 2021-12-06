@@ -4,7 +4,7 @@ fv-admin .brands-content .brand-image img {
     height: 150px;
 }
 
-fv-admin .cars-content .grid-table-body > *,
+fv-admin .cars-content .grid-table-body > .grid-table-body-content,
 fv-admin .cars-content .grid-table-head {
     grid-template-columns: 150px 150px 150px 80px 110px 100px 150px auto;
     align-items: center;
@@ -17,7 +17,11 @@ fv-admin .grid-table {
     overflow-x: auto;
 }
 
-fv-admin .brands-content .grid-table-body > *,
+fv-admin .cars-content .grid-table {
+    min-width: 80vw;
+}
+
+fv-admin .brands-content .grid-table-body > .grid-table-body-content,
 fv-admin .brands-content .grid-table-head {
     grid-template-columns: 150px 150px auto;
     align-items: center;

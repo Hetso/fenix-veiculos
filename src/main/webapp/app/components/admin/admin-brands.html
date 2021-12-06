@@ -2,15 +2,15 @@
     <md-card>
         <md-card-content>
             <md-tabs md-center-tabs md-no-select-click>
-                <md-tab ng-click="setBrandViewStatus('ENABLED')" md-active="brandStatus === 'ENABLED'">
-                    <md-tab-label>Ativados</md-tab-label>
+                <md-tab ng-click="::setBrandViewStatus('ENABLED')" md-active="::brandStatus === 'ENABLED'">
+                    <md-tab-label>{{::'Ativados'}}</md-tab-label>
                 </md-tab>
-                <md-tab ng-click="setBrandViewStatus('DISABLED')" md-active="brandStatus === 'DISABLED'">
-                    <md-tab-label>Desativados</md-tab-label>
+                <md-tab ng-click="::setBrandViewStatus('DISABLED')" md-active="::brandStatus === 'DISABLED'">
+                    <md-tab-label>{{::'Desativados'}}</md-tab-label>
                 </md-tab>
             </md-tabs>
-            <button type="button" class="btn-main" ng-click="editBrand()">
-                Adicionar marca
+            <button type="button" class="btn-main" ng-click="::editBrand()">
+               {{::'Adicionar marca'}}
             </button>
             <fv-input label="Pesquisar" type="text" model="currentBrandSearch"
                 icon="search" icon-tooltip="Realizar pesquisa" icon-callback="reloadBrands" enter-callback="reloadBrands">
@@ -24,28 +24,33 @@
                             <md-switch ng-model="displayImage"></md-switch>
                         </div>
                     </span>
-                    <span>Nome</span>
+                    <span>{{::'Nome'}}</span>
                     <span></span>
                 </div>
                 <div class="grid-table-body">
-                    <div ng-repeat="brand in brands track by brand.id" ng-init="brand.viewDisabled = !brand.disabled" class="brand-row">
+                    <div class="spinner" ng-show="brandsLoading">
+                        <img ng-src="{{::'img/loading.gif'}}" alt="LOADING">
+                        <span>{{::'Carregando marcas'}}</span>
+                    </div>
+                    <div class="grid-table-body-content" ng-repeat="brand in brands" ng-show="!brandsLoading"
+                        ng-init="brand.viewDisabled = !brand.disabled" class="brand-row">
                         <span class="brand-image">
-                            <img ng-show="displayImage" ng-src="{{getImageUrl(brand.logo)}}" onerror="this.src='img/no-image.png'"
+                            <img ng-show="displayImage" ng-src="{{::getImageUrl(brand.logo)}}" onerror="this.src='img/no-image.png'"
                                 alt="BRAND IMAGE">
                         </span>
-                        <span ng-bind="brand.name"></span>
+                        <span ng-bind="::brand.name"></span>
                         <span>
                             <div class="right">
                                 <md-button class="md-icon-button" ng-click="editBrand(brand)">
-                                    <md-tooltip>Editar</md-tooltip>
+                                    <md-tooltip>{{::'Editar'}}</md-tooltip>
                                     <md-icon md-svg-icon="edit"></md-icon>
                                 </md-button>
                                 <div>
                                     <md-tooltip>{{brand.disabled ? 'Ativar' : 'Desativar'}}</md-tooltip>
-                                    <md-switch  ng-model="switch.brandStatus" ng-model-options="{ getterSetter: true }" ng-change="changeBrandStatus(brand)"></md-switch>
+                                    <md-switch  ng-model="switch.brandStatus" ng-model-options="{ getterSetter: true }" ng-change="::changeBrandStatus(brand)"></md-switch>
                                 </div>
-                                <md-button ng-if="brand.disabled" class="md-icon-button" ng-click="removeBrand(brand)">
-                                    <md-tooltip>Excluir</md-tooltip>
+                                <md-button ng-if="brand.disabled" class="md-icon-button" ng-click="::removeBrand(brand)">
+                                    <md-tooltip>{{::'Excluir'}}</md-tooltip>
                                     <md-icon md-svg-icon="delete"></md-icon>
                                 </md-button>
                             </div>

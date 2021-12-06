@@ -44,12 +44,12 @@
             const reader = new FileReader();
             reader.onloadend = function () {
                 $scope.single.currentImage = reader.result;
-                $scope.$apply();
+                $scope.$digest();
             }
 
             if (file) {
                 $scope.updateCallback(file);
-                $scope.$apply();
+                $scope.$digest();
                 reader.readAsDataURL(file);
             } else {
             }
@@ -78,7 +78,7 @@
                             const reader = new FileReader();
                             reader.onloadend = function () {
                                 $scope.multipleImages.images.push({ url: reader.result, isNew: true })
-                                $scope.$apply();
+                                $scope.$digest();
     
                                 resolve(files[key]);
                             }
@@ -93,7 +93,7 @@
                 
                 Promise.all(readers).then(values => {
                     $scope.updateCallback(files);
-                    $scope.$apply();
+                    $scope.$digest();
                 })
             }
         }
