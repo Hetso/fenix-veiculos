@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    var components = angular.module('fv')
+    var components = angular.module('fv.components')
 
     components.component('fvImageSelector', {
         templateUrl: 'app/components/image-selector/image-selector.html',

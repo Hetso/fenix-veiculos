@@ -46,7 +46,13 @@ module.config(['$stateProvider', '$translateProvider', '$urlRouterProvider', '$l
     $stateProvider
         .state('home', {   
             url: '/',
-            template: '<fv-home class="main-content"></fv-home>',
+            template: '<fv-home cars="rslvr.cars" brands="rslvr.brands" class="main-content"></fv-home>',
+            resolve: carsResolver,
+            controller: function(cars, brands) {
+                this.cars = cars;
+                this.brands = brands;
+            },
+            controllerAs: 'rslvr'
         })
         .state('login', {   
             url: '/login',

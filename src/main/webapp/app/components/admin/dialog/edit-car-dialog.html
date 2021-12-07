@@ -26,8 +26,11 @@
                 </md-input-container>
                 <md-input-container class="md-block">
                     <label>Preço</label>
-                    <input name="price" type="number" ng-model="editCarCtrl.editingCar.price" autocomplete="off"
-                        required>
+                    <div style="display: flex; align-items: center;">
+                        <span style="margin-right: 5px;">R$</span>
+                        <input placeholder="0,00" name="price" type="text" ng-model="editCarCtrl.editingCar.price" autocomplete="off"
+                            required currency-formatter>
+                    </div>
                 </md-input-container>
                 <md-input-container class="md-block">
                     <label>Descrição</label>

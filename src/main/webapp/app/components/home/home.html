@@ -1,3 +1,33 @@
 <div class='home-content'>
-    <h3>is comming</h3>
+    <div class="home-header">
+        <div class="search-box">
+            <fv-input label="Pesquisar carros" type="text" model="currentCarSearch" icon="search"
+                icon-tooltip="Realizar pesquisa" icon-callback="reloadCars" enter-callback="reloadCars">
+        </div>
+        <div class="brand-box">
+            <h2>{{::'Visualize por marca'}}</h2>
+            <div class="brand-list">
+                <div class="brand-card" ng-class="{'active': currentBrandView && currentBrandView.id == brand.id}"
+                    ng-repeat="brand in brands track by brand.id" ng-click="searchCarsByBrand(brand)">
+                    <md-tooltip>{{::brand.name}}</md-tooltip>
+                    <img ng-src="{{getImageUrl(brand.logo)}}" alt="BRAND LOGO">
+                </div>
+            </div>
+        </div>
+        <md-divider></md-divider>
+    </div>
+    <div class="home-body">
+        <div class="car-box">
+            <h2 class="title">{{(currentBrandView ? 'Carros ' + currentBrandView.name : 'Carros')}}</h2>
+            <div class="car-list">
+                <div class="car-card" ng-repeat="car in cars track by car.id">
+                    <span>
+                        <img ng-src="{{::getImageUrl(car.coverImage)}}" alt="CAR IMAGE">
+                    </span>
+                    <span>{{::(car.brand.name + ' ' + car.model)}}</span>
+                    <span>{{::car.price | fvCurrency}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    var components = angular.module('fv')
+    var components = angular.module('fv.components')
 
     components.component('fvSidebar', {
         templateUrl: 'app/components/sidebar/sidebar.html',

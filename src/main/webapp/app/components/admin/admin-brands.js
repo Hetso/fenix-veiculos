@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    var components = angular.module('fv')
+    var components = angular.module('fv.components')
 
     components.component('fvAdminBrands', {
         templateUrl: 'app/components/admin/admin-brands.html',

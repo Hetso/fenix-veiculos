@@ -1,5 +1,6 @@
 fv-home {
     background-color: white;
+    overflow-y: auto;
 }
 
 .home-content {
@@ -8,4 +9,84 @@ fv-home {
     align-items: center;
     height: 100%;
     width: 100%;
+    grid-template-rows: 0.5fr 1fr;
+    padding: 0 10%;
+    grid-template-columns: 1fr;
+    margin-bottom: 10%;
+}
+
+.home-header {
+    align-self: baseline;
+    padding: 50px 0 100px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.home-header .search-box {
+    width: 70%;
+}
+
+.home-body {
+    padding-bottom: 100px;
+    align-self: baseline;
+}
+
+.home-body .car-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(var(--card-size), var(--card-size)));
+    justify-content: center;
+    gap: 25px;
+}
+
+.home-body .car-box .title {
+    text-align: center;
+    padding-bottom: 25px;
+}
+
+.home-body .car-list .car-card img {
+    width: var(--card-size);
+    height: var(--card-size);
+}
+
+.home-body .car-list .car-card {
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 5px 8px 0px #c8c8c8;
+}
+
+.home-body .car-list .car-card > *:not(:first-child) {
+    padding: 15px;
+}
+
+
+.home-header .brand-box {
+    width: 100%;
+    max-width: 100vw;
+}
+
+.home-header .brand-box h2 {
+    text-align: center;
+    padding-bottom: 25px;
+}
+
+.home-header .brand-list {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.home-header .brand-list .brand-card {
+    cursor: pointer;
+    padding: 5px;
+}
+
+.home-header .brand-list .brand-card.active {
+    border: 4px solid var(--main);
+}
+
+.home-header .brand-list .brand-card img {
+    width: 150px;
+    height: 150px;
 }

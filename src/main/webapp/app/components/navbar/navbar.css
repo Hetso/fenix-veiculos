@@ -1,5 +1,5 @@
 .nav-content {
-    height: 85px;
+    height: var(--nav-height);
     background-color: var(--main);
     color: var(--nav-font-color);
     display: grid;

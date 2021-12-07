@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    var components = angular.module('fv')
+    var components = angular.module('fv.components')
 
     components.component('fvNav', {
         templateUrl: 'app/components/navbar/navbar.html',
