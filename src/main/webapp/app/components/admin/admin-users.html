@@ -1,0 +1,59 @@
+<div class="users-content">
+    <md-card>
+        <md-card-content>
+            <md-tabs md-center-tabs md-no-select-click>
+                <md-tab ng-click="::setUserViewStatus('ACTIVE')" md-active="::userStatus === 'ACTIVE'">
+                    <md-tab-label>{{::'Ativos'}}</md-tab-label>
+                </md-tab>
+                <md-tab ng-click="::setUserViewStatus('INACTIVE')" md-active="::userStatus === 'INACTIVE'">
+                    <md-tab-label>{{::'Inativos'}}</md-tab-label>
+                </md-tab>
+            </md-tabs>
+
+            <button type="button" class="btn-main" ng-click="::editUser()">
+                {{::'Adicionar usuário'}}
+            </button>
+
+            <fv-input label="Pesquisar" type="text" model="currentUsersSearch"
+                icon="search" icon-tooltip="Realizar pesquisa" icon-callback="reloadUsers" enter-callback="reloadUsers">
+            </fv-input>
+
+            <md-divider></md-divider>
+
+            <div class="grid-table">
+                <div class="grid-table-head">
+                    <span>{{::'Nome completo'}}</span>
+                    <span>{{::'Nome de usuário (login)'}}</span>
+                    <span>{{::'Email'}}</span>
+                    <span>{{::'Gênero'}}</span>
+                    <span></span>
+                </div>
+                <div class="grid-table-body">
+                    <div class="spinner" ng-show="usersLoading">
+                        <img ng-src="{{::'img/loading.gif'}}" alt="LOADING">
+                        <span>{{::'Carregando usuários'}}</span>
+                    </div>
+                    <div class="grid-table-body-content" ng-repeat="user in users" ng-show="!usersLoading"
+                        ng-init="user.viewDisabled = user.active" class="user-row">
+                        <span>{{::(user.firstname + ' ' + user.lastname)}}</span>
+                        <span ng-bind="::user.username"></span>
+                        <span ng-bind="::user.email"></span>
+                        <span>{{getGender(user.gender)}}</span>
+                        <span>
+                            <div class="right">
+                                <md-button class="md-icon-button" ng-click="editUser(user)">
+                                    <md-tooltip>{{::'Editar'}}</md-tooltip>
+                                    <md-icon md-svg-icon="edit"></md-icon>
+                                </md-button>
+                                <div>
+                                    <md-tooltip>{{!user.active ? 'Ativar' : 'Inativar'}}</md-tooltip>
+                                    <md-switch  ng-model="switch.userStatus" ng-model-options="{ getterSetter: true }" ng-change="::changeUserStatus(user)"></md-switch>
+                                </div>
+                            </div>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </md-card-content>
+    </md-card>
+</div>

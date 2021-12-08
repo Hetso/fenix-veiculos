@@ -12,4 +12,5 @@ import lombok.experimental.SuperBuilder;
 public class UserResponseDTO extends UserDTO {
 
 	private final Long id;
+	private final boolean isActive;
 }

@@ -1,0 +1,23 @@
+<md-dialog style="width: 30%;">
+    <form data-ng-submit="ctrl.changeUserStatus(ctrl.currentUser)">
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <h3 class="md-padding" ng-if="!ctrl.currentUser.active">
+                    Deseja ativar este usuário? O usuário poderá fazer login no sistema.
+                </h3>
+                <h3 class="md-padding" ng-if="ctrl.currentUser.active">
+                    Deseja inativar este usuário? O usuário não poderá fazer login no sistema.
+                </h3>
+                <div class="md-padding">
+                    <span>
+                        {{ctrl.currentUser.username}} 
+                    </span>
+                </div>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions>
+            <md-button type="button" ng-click="ctrl.close()"><span>Cancelar</span></md-button>
+            <md-button type="submit" ><span>Confirmar</span></md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

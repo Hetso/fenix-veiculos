@@ -16,7 +16,7 @@ import lombok.experimental.SuperBuilder;
 @NonFinal
 @SuperBuilder
 @NoArgsConstructor(force = true)
-public abstract class UserDTO {
+public class UserDTO {
 
 	@NotBlank(message = "Email is required")
 	@Pattern(regexp = RegexUtils.EMAIL, message = "Invalid email")

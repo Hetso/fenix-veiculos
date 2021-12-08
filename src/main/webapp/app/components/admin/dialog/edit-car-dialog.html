@@ -7,7 +7,7 @@
                     update-callback="editCarCtrl.coverImageUpdate"></fv-image-selector>
                 <md-input-container class="md-block">
                     <label>Marca</label>
-                    <md-select ng-model="editCarCtrl.editingCar.brand" placeholder="Selecione uma marca">
+                    <md-select ng-model="editCarCtrl.editingCar.brand" placeholder="Selecione uma marca" required>
                         <md-option ng-selected="editCarCtrl.editingCar.brand.id === brand.id" ng-value="brand" ng-repeat="brand in editCarCtrl.brands">{{ brand.name }}</md-option>
                     </md-select>
                 </md-input-container>

@@ -21,6 +21,11 @@ fv-admin .cars-content .grid-table {
     min-width: 80vw;
 }
 
+fv-admin .grid-table-body > .grid-table-body-content > *,
+fv-admin .brands-content .grid-table-head > * {
+    word-break: break-all;
+}
+
 fv-admin .brands-content .grid-table-body > .grid-table-body-content,
 fv-admin .brands-content .grid-table-head {
     grid-template-columns: 150px 150px auto;
@@ -29,4 +34,9 @@ fv-admin .brands-content .grid-table-head {
 
 fv-admin .grid-table-body {
     max-height: 45vh;
+}
+
+fv-admin .users-content .grid-table-body > .grid-table-body-content,
+fv-admin .users-content .grid-table-head {
+    grid-template-columns: 150px 150px 200px 150px auto;
 }

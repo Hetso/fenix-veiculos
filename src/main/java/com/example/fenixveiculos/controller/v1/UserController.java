@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -23,6 +24,7 @@ import com.example.fenixveiculos.dto.user.UserDTO;
 import com.example.fenixveiculos.dto.user.UserRequestDTO;
 import com.example.fenixveiculos.dto.user.UserResponseDTO;
 import com.example.fenixveiculos.model.UserModel;
+import com.example.fenixveiculos.model.UserStatus;
 import com.example.fenixveiculos.service.AuthenticationService;
 import com.example.fenixveiculos.service.MailService;
 import com.example.fenixveiculos.service.UserService;
@@ -128,8 +130,15 @@ public class UserController {
 
 	@GetMapping
 	@Operation(summary = "Get all users")
-	public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
-		return ResponseEntity.ok(userService.findAllUsers());
+	public ResponseEntity<List<UserResponseDTO>> getAllUsers(
+			@RequestParam(name = "search", required = false) String search,
+			@RequestParam("userStatus") UserStatus userStatus) {
+
+		if (search != null && !search.isEmpty()) {
+			return ResponseEntity
+					.ok(userService.findAllUsers(userStatus, search));
+		}
+		return ResponseEntity.ok(userService.findAllUsers(userStatus));
 	}
 
 	@GetMapping(value = "/{id:[0-9]+}")

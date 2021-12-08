@@ -1,0 +1,41 @@
+<md-dialog>
+    <form name="ctrl.editUserForm" data-ng-submit="ctrl.saveUser(ctrl.editingUser)">
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <h2 class="md-title">{{ctrl.editingBrand.id ? 'Editar usuário' : 'Adicionar usuário'}}</h2>
+
+                <md-input-container class="md-block">
+                    <label>{{::'Nome de usuário'}}</label>
+                    <input name="username" type="text" ng-model="ctrl.editingUser.username" autocomplete="off" required>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>{{::'Primeiro nome'}}</label>
+                    <input name="firstname" type="text" ng-model="ctrl.editingUser.firstname" autocomplete="off" required>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>{{::'Último nome'}}</label>
+                    <input name="lastname" type="text" ng-model="ctrl.editingUser.lastname" autocomplete="off" required>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>{{::'Email'}}</label>
+                    <input name="email" type="text" ng-model="ctrl.editingUser.email" autocomplete="off" required 
+                        ng-pattern="/^\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b$/">
+                </md-input-container>
+                <md-input-container class="md-block" ng-if="!ctrl.editingUser.id">
+                    <label>{{::'Senha inicial'}}</label>
+                    <input name="password" type="password" ng-model="ctrl.editingUser.password" autocomplete="off" required>
+                </md-input-container>
+                <md-select ng-model="ctrl.editingUser.gender" placeholder="Selecione um gênero" required>
+                    <md-option ng-selected="ctrl.editingUser.gender === gender" ng-value="gender" ng-repeat="gender in ctrl.genders">
+                        {{ ctrl.getGender(gender) }}
+                    </md-option>
+                </md-select>
+
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions>
+            <md-button type="button" ng-click="ctrl.close()"><span>Cancelar</span></md-button>
+            <md-button type="submit" ng-disabled="!ctrl.editUserForm.$valid"><span>Salvar</span></md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

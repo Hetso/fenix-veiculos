@@ -19,6 +19,22 @@
             },
             recoveryPassword: function(data) {
                 return $http.post(prefixV1 + '/recoveryPassword', data).then(extractData)
+            },
+            saveUser: function(user) {
+                if(user.id) {
+                    return $http.put(prefixV1 + '/' + user.id, user).then(extractData)
+                }
+
+                return $http.post(prefixV1, user).then(extractData)
+            },
+            findAllUsers: function(status, search) {
+                return $http.get(prefixV1 + `?userStatus=${status}` + (search ? '&search='  + search : '')).then(extractData)
+            },
+            activeUser: function(user) {
+                return $http.put(prefixV1 + `/${user.id}/active`).then(extractData)
+            },
+            inactiveUser: function(user) {
+                return $http.put(prefixV1 + `/${user.id}/inactive`).then(extractData)
             }
         };
     });

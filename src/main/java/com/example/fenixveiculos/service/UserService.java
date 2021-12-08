@@ -16,6 +16,7 @@ import com.example.fenixveiculos.dto.user.UserRequestDTO;
 import com.example.fenixveiculos.dto.user.UserResponseDTO;
 import com.example.fenixveiculos.model.UserForgotPasswordModel;
 import com.example.fenixveiculos.model.UserModel;
+import com.example.fenixveiculos.model.UserStatus;
 import com.example.fenixveiculos.repository.UserForgotPasswordRepository;
 import com.example.fenixveiculos.repository.UserRepository;
 import com.example.fenixveiculos.utils.EncoderUtils;
@@ -82,8 +83,17 @@ public class UserService {
 				UserResponseDTO.class);
 	}
 
-	public List<UserResponseDTO> findAllUsers() {
-		return MapperUtils.convert(userRepository.findAll(),
+	public List<UserResponseDTO> findAllUsers(UserStatus status) {
+		return MapperUtils.convert(
+				userRepository.findAllByStatus(status == UserStatus.ACTIVE),
+				UserResponseDTO.class);
+	}
+
+	public List<UserResponseDTO> findAllUsers(UserStatus status,
+			String search) {
+		return MapperUtils.convert(
+				userRepository.searchAllByStatus(status == UserStatus.ACTIVE,
+						search),
 				UserResponseDTO.class);
 	}
 
