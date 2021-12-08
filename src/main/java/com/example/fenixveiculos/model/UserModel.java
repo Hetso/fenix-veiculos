@@ -54,13 +54,15 @@ public class UserModel implements UserDetails {
 	@Enumerated(EnumType.STRING)
 	private UserGender gender;
 
+	@Column(name = "is_active", updatable = false, columnDefinition = "TINYINT(1)", nullable = false)
+	private boolean isActive;
+
 	public enum UserGender {
 		MALE, FEMALE, UNDEFINED
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -84,8 +86,7 @@ public class UserModel implements UserDetails {
 
 	@Override
 	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return true;
+		return isActive;
 	}
 
 }

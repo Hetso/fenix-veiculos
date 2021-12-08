@@ -1,9 +1,11 @@
 package com.example.fenixveiculos.controller.v1;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.example.fenixveiculos.dto.auth.AuthenticationRequestDTO;
 import com.example.fenixveiculos.dto.auth.AuthenticationResponseDTO;
@@ -33,12 +36,11 @@ public class AuthenticationController {
 
 	private final AuthenticationManager authManager;
 	private final JwtTokenService tokenService;
-	private final AuthenticationService authService;
 
 	@GetMapping("/currentUser")
 	@Operation(summary = "Get current user authenticated")
 	public ResponseEntity<UserResponseDTO> getCurrentUser() {
-		UserModel currentUser = authService.getCurrentUser();
+		UserModel currentUser = AuthenticationService.getCurrentUser();
 
 		if (currentUser != null) {
 			return ResponseEntity
@@ -71,7 +73,11 @@ public class AuthenticationController {
 							.build());
 		} catch (BadCredentialsException e) {
 			return ResponseEntity.badRequest().build();
+		} catch (DisabledException e2) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN,
+					"USER IS DISABLED");
 		} catch (Exception e) {
+			e.printStackTrace();
 			return ResponseEntity.internalServerError().build();
 		}
 

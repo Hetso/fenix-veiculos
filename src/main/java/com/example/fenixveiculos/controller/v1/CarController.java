@@ -38,6 +38,7 @@ import com.example.fenixveiculos.model.CarBrandStatus;
 import com.example.fenixveiculos.service.AuthenticationService;
 import com.example.fenixveiculos.service.CarService;
 import com.example.fenixveiculos.service.FileService;
+import com.example.fenixveiculos.service.MailService;
 import com.example.fenixveiculos.utils.FileUtils;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -52,6 +53,7 @@ public class CarController {
 
 	private final CarService carService;
 	private final FileService fileService;
+	private final MailService mailService;
 
 // -- CARS
 

@@ -22,7 +22,7 @@ public class AuthenticationService implements UserDetailsService {
 
 	private final UserRepository userRepository;
 
-	public UserModel getCurrentUser() {
+	public static UserModel getCurrentUser() {
 
 		if (!isAuthenticated()) {
 			return null;

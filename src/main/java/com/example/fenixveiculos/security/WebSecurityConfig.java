@@ -45,6 +45,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.accessDeniedHandler(new AccessDeniedHandlerImpl())
 				.and()
 				.authorizeRequests()
+				.antMatchers("/api/v1/users/forgotPassword",
+						"/api/v1/users/recoveryPassword")
+				.permitAll()
 				.antMatchers("/api/v1/auth/**").permitAll()
 				.antMatchers(HttpMethod.GET, "/api/v1/cars/**").permitAll()
 				.antMatchers("/api/v1/**").authenticated()
