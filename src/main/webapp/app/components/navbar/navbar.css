@@ -28,3 +28,8 @@
 .nav-content md-icon svg {
     fill: var(--nav-font-color);
 }
+
+.nav-content .logo img {
+    cursor: pointer;
+    width: calc(var(--nav-height) - 1vh);
+}
