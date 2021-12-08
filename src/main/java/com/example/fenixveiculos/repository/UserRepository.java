@@ -30,7 +30,7 @@ public interface UserRepository extends JpaRepository<UserModel, Long>,
 	List<UserModel> findAllByStatus(@Param("isActive") boolean isActive);
 
 	@Query(value = "SELECT * FROM user WHERE is_active = :isActive "
-			+ "AND CONCAT(firstname, ' ', lastname, ' ', gender, ' ', username, ' ', email) "
+			+ "AND CONCAT(firstname, ' ', lastname, ' ', ' ', username, ' ', email) "
 			+ "LIKE %:criteria%", nativeQuery = true)
 	List<UserModel> searchAllByStatus(@Param("isActive") boolean isActive,
 			@Param("criteria") String criteria);

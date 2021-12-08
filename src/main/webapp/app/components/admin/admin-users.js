@@ -19,6 +19,8 @@
             reloadUsers(users);
         }
 
+        $scope.currentUsersSearch = null;
+
         $scope.userStatus = 'ACTIVE';
         $scope.editUser = function(user) {
             reloadUsers();
@@ -131,7 +133,7 @@
                     return;
                 }
 
-                UserService.findAllUsers($scope.userStatus, $scope.currentUserearch)
+                UserService.findAllUsers($scope.userStatus, $scope.currentUsersSearch)
                 .then(function(res) {
                     $scope.users = res;
                 })
