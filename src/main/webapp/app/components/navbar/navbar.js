@@ -15,8 +15,12 @@
         this.$onInit = function init(){
         }
 
-        $scope.isState = function(name) {
-           return $state.includes(name);
+        $scope.isState = function(name, exact) {
+           return !exact ? $state.includes(name) : $state.is(name);
+        }
+
+        $scope.showTabs = function() {
+            return !$state.includes('auth')
         }
 
         $scope.logout = function() {

@@ -54,9 +54,23 @@ module.config(['$stateProvider', '$translateProvider', '$urlRouterProvider', '$l
             },
             controllerAs: 'rslvr'
         })
-        .state('login', {   
+        // auth
+        .state('auth', {
+            abstract: true,
+            url: '/auth',
+            templateUrl: 'app/components/auth/auth.html'
+        })
+        .state('auth.login', {   
             url: '/login',
-            template: '<fv-login class="main-content" ></fv-login>',
+            template: '<fv-login></fv-login>',
+        })
+        .state('auth.recoveryPassword', {   
+            url: '/recoveryPassword/:token',
+            template: '<fv-recovery-password></fv-recovery-password>',
+        })
+        .state('auth.forgotPassword', {   
+            url: '/forgotPassword',
+            template: '<fv-forgot-password></fv-forgot-password>',
         })
         // admin
         .state('admin', {   

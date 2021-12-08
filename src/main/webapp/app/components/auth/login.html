@@ -1,5 +1,10 @@
-<div class="login-content">
+<div class="auth-child-content">
     <md-card>
+        <md-card-header>
+            <md-card-header-text>
+                <div class="md-title" style="text-align: center;">{{::'Entrar'}}</div>
+            </md-card-header-text>
+        </md-card-header>
         <md-card-content>
             <div ng-if="invalidCredentials" class="error-box">
                 <span>{{'Credenciais inválidas'}}</span>
@@ -7,7 +12,10 @@
             <form name="loginForm" ng-submit="login()">
                 <fv-input class="md-flex" label="Nome de usuário ou e-mail" type="text" model="credentials.login" autofocus="true" required></fv-input>
                 <fv-input class="md-flex" label="Senha" type="password" model="credentials.password" required></fv-input>
-                <button class="btn-main" type="submit" ng-disabled="!loginForm.$valid && !loading">{{'Entrar' | translate}}</button>
+                <button class="btn-main" type="submit" ng-disabled="!loginForm.$valid || loading">{{'Entrar' | translate}}</button>
+                <div style="margin-top: 25px;">
+                    <a class="a-sref" ui-sref="auth.forgotPassword">Esqueci minha senha</a>
+                </div>
             </form>
         </md-card-content>
     </md-card>

@@ -99,8 +99,13 @@ public class UserService {
 
 	@Transactional
 	public void saveForgotPasswordToken(long userId, String token) {
-		forgotPasswordRepository.save(
-				new UserForgotPasswordModel(token, new UserModel(userId)));
+		if (forgotPasswordRepository.findByUserId(userId).isPresent()) {
+			forgotPasswordRepository.updateToken(userId, token);
+		} else {
+			forgotPasswordRepository.save(
+					new UserForgotPasswordModel(token, new UserModel(userId)));
+		}
+
 	}
 
 	@Transactional

@@ -23,7 +23,9 @@ public class IndexController {
 	private final String SETUP_INDEX_LOCATION = "/index.html";
 
 	@GetMapping(value = { "/",
-			"/login",
+			"/auth/login",
+			"/auth/forgotPassword",
+			"/auth/recoveryPassword/{token}",
 			"/admin",
 			"/admin/brands",
 			"/admin/users" })
@@ -32,6 +34,14 @@ public class IndexController {
 			response.sendRedirect("/setup");
 			return SETUP_INDEX_LOCATION;
 		}
+
+		return "/index.html";
+	}
+
+	@GetMapping(value = "/login")
+	public String handleLoginRedirect(HttpServletResponse response)
+			throws IOException {
+		response.sendRedirect("/auth/login");
 
 		return "/index.html";
 	}

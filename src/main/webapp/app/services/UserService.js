@@ -14,6 +14,12 @@
             createUser: function(data){
                return $http.post(prefixV1, data).then(extractData)
             },
+            forgotPassword: function(data) {
+                return $http.post(prefixV1 + '/forgotPassword', data).then(extractData)
+            },
+            recoveryPassword: function(data) {
+                return $http.post(prefixV1 + '/recoveryPassword', data).then(extractData)
+            }
         };
     });
 }());

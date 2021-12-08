@@ -4,7 +4,7 @@
     var components = angular.module('fv.components')
 
     components.component('fvLogin', {
-        templateUrl: 'app/components/login/login.html',
+        templateUrl: 'app/components/auth/login.html',
         controller: ['$scope', 'AuthenticationService', '$state', '$rootScope', LoginController],
     })
 

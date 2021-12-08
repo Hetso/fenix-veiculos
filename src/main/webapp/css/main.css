@@ -199,3 +199,17 @@ table.fv-table .right,
     height: 50px;
     margin-right: 25px;
 }
+
+button .spinner {
+    width: 100%;
+    justify-content: center;
+}
+
+button .spinner img {
+    height: calc(var(--btn-height) / 2);
+    width: calc(var(--btn-height) / 2);
+}
+
+.a-sref {
+    color: #175ac9;
+}

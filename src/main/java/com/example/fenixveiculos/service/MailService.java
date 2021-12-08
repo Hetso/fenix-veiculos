@@ -35,7 +35,7 @@ public class MailService {
 	}
 
 	public void sendRecoveryPassword(String to, String token) {
-		String href = baseUrl + "/recoveryPassword/" + token;
+		String href = baseUrl + "/auth/recoveryPassword/" + token;
 		String text = "<span>Acesse para recuperar sua senha: </span>"
 				.concat("<a href=\"" + href + "\">Recuperar senha</a>");
 
