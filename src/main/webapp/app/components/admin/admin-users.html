@@ -33,6 +33,7 @@
                         <img ng-src="{{::'img/loading.gif'}}" alt="LOADING">
                         <span>{{::'Carregando usuários'}}</span>
                     </div>
+                    <div ng-if="(!users || !users.length) && !usersLoading" style="text-align: center;">{{'Nenhum registro encontrado'}}</div>
                     <div class="grid-table-body-content" ng-repeat="user in users" ng-show="!usersLoading"
                         ng-init="user.viewDisabled = user.active" class="user-row">
                         <span>{{::(user.firstname + ' ' + user.lastname)}}</span>

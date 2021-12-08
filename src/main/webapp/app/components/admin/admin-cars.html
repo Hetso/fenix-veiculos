@@ -37,6 +37,7 @@
                         <img src="{{::'img/loading.gif'}}" alt="LOADING">
                         <span>{{::'Carregando carros'}}</span>
                     </div>
+                    <div ng-if="(!cars || !cars.length) && !carsLoading" style="text-align: center;">{{'Nenhum registro encontrado'}}</div>
                     <div class="grid-table-body-content" ng-show="!carsLoading"
                         ng-repeat="car in cars" class="car-row">
                         <span class="car-image">

@@ -32,6 +32,7 @@
                         <img ng-src="{{::'img/loading.gif'}}" alt="LOADING">
                         <span>{{::'Carregando marcas'}}</span>
                     </div>
+                    <div ng-if="(!brands || !brands.length) && !brandsLoading" style="text-align: center;">{{'Nenhum registro encontrado'}}</div>
                     <div class="grid-table-body-content" ng-repeat="brand in brands" ng-show="!brandsLoading"
                         ng-init="brand.viewDisabled = !brand.disabled" class="brand-row">
                         <span class="brand-image">
