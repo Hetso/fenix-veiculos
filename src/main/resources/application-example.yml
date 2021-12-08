@@ -1,4 +1,18 @@
 spring:
+  mail:
+    password: youpass
+    username: youmail@gmail.com
+    host: smtp.gmail.com
+    port: 587
+    from: frommail@gmail.com
+    properties:
+      mail:
+        transport: 
+          protocol: smtp
+        smtp:
+          auth: true
+          starttls:
+            enable: true
   servlet:
     multipart:
       enabled: true
@@ -20,6 +34,7 @@ spring:
     user: fenixveiculos
     password: 12345
 server:
+  base-url: http://localhost:8080
   error:
     include-stacktrace: never
 springdoc:
