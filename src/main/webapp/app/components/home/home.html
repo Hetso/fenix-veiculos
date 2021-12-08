@@ -7,6 +7,7 @@
         <div class="brand-box">
             <h2>{{::'Visualize por marca'}}</h2>
             <div class="brand-list">
+                <div ng-if="!brands || !brands.length">{{'Nenhuma marca encontrada'}}</div>
                 <div class="brand-card" ng-class="{'active': currentBrandView && currentBrandView.id == brand.id}"
                     ng-repeat="brand in brands track by brand.id" ng-click="searchCarsByBrand(brand)">
                     <md-tooltip>{{::brand.name}}</md-tooltip>
@@ -19,6 +20,7 @@
     <div class="home-body">
         <div class="car-box">
             <h2 class="title">{{(currentBrandView ? 'Carros ' + currentBrandView.name : 'Carros')}}</h2>
+            <div ng-if="!cars || !cars.length" style="text-align: center;">{{'Nenhum carro encontrado'}}</div>
             <div class="car-list">
                 <div class="car-card" ng-repeat="car in cars track by car.id">
                     <span>
