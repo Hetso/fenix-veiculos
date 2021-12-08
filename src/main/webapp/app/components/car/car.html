@@ -1,0 +1,42 @@
+<div class="car-view-content">
+    <div class="car-current-image">
+        <img ng-show="currentImageView" ng-src="{{getImageUrl(currentImageView)}}" alt="CAR IMAGE">
+        <div class="loading-image"></div>
+    </div>
+    <div class="car-info">
+
+        <div class="box">
+            <div class="box-title">{{::'Marca'}}</div>
+            <div>{{::car.brand.name}}</div>
+        </div>
+        <div class="box">
+            <div class="box-title">{{::'Modelo'}}</div>
+            <div>{{::car.model}}</div>
+        </div>
+        <div class="box">
+            <div class="box-title">{{::'Ano'}}</div>
+            <div>{{::car.year}}</div>
+        </div>
+        <div class="box">
+            <div class="box-title">{{::'Preço'}}</div>
+            <div style="color: var(--success)">{{car.price | fvCurrency}}</div>
+        </div>
+        <div class="box">
+            <div class="box-title">{{::'Descrição'}}</div>
+            <div>{{::car.description}}</div>
+        </div>
+        <div class="box">
+            <div class="box-title">{{::'Cor'}}</div>
+            <div>{{::car.color}}</div>
+        </div>
+
+    </div>
+    <div class="car-images">
+        <div ng-click="changeCurrentImageView(car.coverImage)" class="image-card" ng-show="car.coverImage">
+            <img ng-src="{{getImageUrl(car.coverImage)}}" alt="CAR IMAGE">
+        </div>
+        <div ng-click="changeCurrentImageView(image.imagePath)" class="image-card" ng-repeat="image in car.images">
+            <img ng-src="{{getImageUrl(image.imagePath)}}" alt="CAR IMAGE">
+        </div>
+    </div>
+</div>

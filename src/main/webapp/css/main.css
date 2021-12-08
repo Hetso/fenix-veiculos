@@ -17,6 +17,8 @@
 
     --nav-height: 8vh;
     --main-height: 92vh;
+
+    --shadow: #c8c8c8;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');

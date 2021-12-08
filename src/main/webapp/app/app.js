@@ -54,6 +54,10 @@ module.config(['$stateProvider', '$translateProvider', '$urlRouterProvider', '$l
             },
             controllerAs: 'rslvr'
         })
+        .state('car', {
+            url: '/car/:id',
+            template: '<fv-car-view class="main-content"></fv-car-view>'
+        })
         // auth
         .state('auth', {
             abstract: true,

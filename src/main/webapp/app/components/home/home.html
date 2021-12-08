@@ -23,8 +23,11 @@
             <div ng-if="!cars || !cars.length" style="text-align: center;">{{'Nenhum carro encontrado'}}</div>
             <div class="car-list">
                 <div class="car-card" ng-repeat="car in cars track by car.id">
-                    <span>
+                    <span class="car-card-image-content" ng-click="viewCar(car)">
                         <img ng-src="{{::getImageUrl(car.coverImage)}}" alt="CAR IMAGE">
+                        <div class="car-card-overlay">
+                            <div class="overlay-info">{{::'Ver detalhes'}}</div>
+                        </div>
                     </span>
                     <span>{{::(car.brand.name + ' ' + car.model)}}</span>
                     <span style="color: var(--success);">{{::car.price | fvCurrency}}</span>

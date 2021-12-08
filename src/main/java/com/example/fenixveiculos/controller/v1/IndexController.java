@@ -28,7 +28,8 @@ public class IndexController {
 			"/auth/recoveryPassword/{token}",
 			"/admin",
 			"/admin/brands",
-			"/admin/users" })
+			"/admin/users",
+			"car/{id:[0-9]+}" })
 	public String handleIndex(HttpServletResponse response) throws IOException {
 		if (!configurationService.isConfigured()) {
 			response.sendRedirect("/setup");

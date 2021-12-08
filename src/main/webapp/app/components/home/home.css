@@ -90,3 +90,40 @@ fv-home {
     width: 150px;
     height: 150px;
 }
+
+.home-body .car-card-image-content {
+    position: relative;
+}
+
+.home-body .car-card-image-content:hover .car-card-overlay {
+    opacity: 1;
+}
+
+.home-body .car-card-image-content:hover .car-card-overlay .overlay-info {
+    height: calc(var(--btn-height) * 2);
+}
+
+.home-body .car-card-overlay {
+    transition: 0.4s linear;
+    opacity: 0;
+    background-color: #000000ad;
+    position: absolute;
+    display: flex;
+    top: 0;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    justify-content: flex-end;
+    cursor: pointer;
+}
+
+.home-body .car-card-overlay .overlay-info {
+    background-color: var(--main);
+    height: 0;
+    color: white;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+}

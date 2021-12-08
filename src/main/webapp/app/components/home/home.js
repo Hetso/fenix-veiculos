@@ -5,14 +5,14 @@
 
     components.component('fvHome', {
         templateUrl: 'app/components/home/home.html',
-        controller: ['$scope', 'CarService', HomeController],
+        controller: ['$scope', 'CarService', '$state', HomeController],
         bindings: {
             cars: '<',
             brands: '<'
         }
     })
 
-    function HomeController($scope, CarService) {
+    function HomeController($scope, CarService, $state) {
 
         this.$onInit = function init(){
             reloadCars(this.cars);
@@ -25,6 +25,10 @@
         $scope.currentCarSearch = null;
 
         $scope.reloadCars = reloadCars;
+
+        $scope.viewCar = function(car) {
+            $state.go('car', {id: car.id})
+        }
 
         function reloadCars(cars) {
             $scope.currentBrandView = null;
