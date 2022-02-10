@@ -1,4 +1,5 @@
 # fenix-veiculos
+
 _version 0.9.0_
 
 Projeto da faculdade para gestão e listagem de veículos (somente carros :red_car:). 
@@ -18,6 +19,67 @@ Projeto da faculdade para gestão e listagem de veículos (somente carros :red_c
 - Ativar/Desativar marcas (incluindo todos os carros vinculados) ou carros, podendo exluir permanentemente a marca ou o carro.
 
 - Visualização detalhada do carro.
+
+## Dev
+
+#### Config
+
+1. Crie um arquivo `application.yml` e copie tudo do arquivo `application-example.yml`.
+
+2. Para envio de e-mail altere as propriedades:
+    ```
+    spring:
+        mail:
+            password: youpass
+            username: youmail@gmail.com
+            host: smtp.gmail.com
+            port: 587
+            from: frommail@gmail.com
+    ```
+
+3. Para conexão com banco de dados altere as propriedades: 
+    ```
+    datasource:
+      url: "jdbc:mysql://localhost:3306/fenix_veiculos"
+      username: fenixveiculos
+      password: 12345
+    flyway:
+      url: jdbc:mysql://localhost:3306/fenix_veiculos
+      user: fenixveiculos
+      password: 12345
+    ```
+
+4. Defina a base url em:
+    ```
+    server:
+      base-url: http://localhost:8080
+    ```
+
+5. Defina o diretório de upload em:
+    ```
+    file:
+      local: 
+        upload-dir: /home/myuser/fenix-veiculos/uploads
+    ```
+
+6. Defina a secret do JWT em:
+    ```
+    jwt:
+      secret: mySecret
+    ```
+
+
+#### Install && Run
+
+1. Via Terminal: Execute `mvn clean install` na raíz do projeto para fazer o build. Após isso use uma das seguintes alternativas para executar:
+
+- Via Terminal com Maven: Execute `mvn spring-boot:run` na raíz do projeto.
+
+- Via Terminal com JAVA JAR: Execute `java -jar target/fenix-veiculos-{version}-SNAPSHOT.jar` na raíz do projeto. Substitua `{version}` pela [versão atual do SNAPSHOT](https://github.com/Hetso/fenix-veiculos#fenix-veiculos) ([versão no topo do documento](https://github.com/Hetso/fenix-veiculos#fenix-veiculos) ou no [pom.xml](https://github.com/Hetso/fenix-veiculos/blob/master/pom.xml))
+
+#### Docs
+
+Documentação da API gerada com OpenAPI e Swagger-ui, acesse {your-app-url}/swagger-ui.html.
 
 ## Anexos
 
