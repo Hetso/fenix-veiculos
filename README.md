@@ -4,6 +4,17 @@ _version 0.9.0_
 
 Projeto da faculdade para gestão e listagem de veículos (somente carros :red_car:). 
 
+Um projeto desenvolvido com:
+
+- Spring Boot
+- Spring Data JPA
+- MySQL/MariaDB
+- Flyway (Migration)
+- Lombok
+- AngularJS
+- Angular Material
+- OpenAPI && Swagger-ui (Docs)
+
 *__OBS__: Imagens do sistema localizadas no final em Anexos.*
 
 ## Funcionalidades
