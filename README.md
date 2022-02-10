@@ -1,8 +1,9 @@
 # fenix-veiculos
+_version 0.9.0_
 
 Projeto da faculdade para gestão e listagem de veículos (somente carros :red_car:). 
 
-*__OBS__*: Imagens do sistema localizadas no final em Anexos.*
+*__OBS__: Imagens do sistema localizadas no final em Anexos.*
 
 ## Funcionalidades
 
